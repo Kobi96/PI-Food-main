@@ -1,7 +1,6 @@
 const dietsRouter = require("express").Router();
+const getDietsHandler = require("../handlers/dietsHandlers");
 
-dietsRouter.get("/", (req, res) => {
-  res.send("Devuelve un arreglo con todos los tipos de dietas");
-});
+dietsRouter.get("/", getDietsHandler);
 
 module.exports = dietsRouter;

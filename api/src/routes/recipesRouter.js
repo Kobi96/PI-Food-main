@@ -1,20 +1,14 @@
 const recipesRouter = require("express").Router();
+const {
+  getRecipeHandler,
+  getRecipesHandler,
+  postRecipeHandler,
+} = require("../handlers/recipesHandlers");
 
-recipesRouter.get("/", (req, res) => {
-  const { name } = req.query;
-  res.send(
-    `Muestra todas las recetas que coincidan con el nombre ${name} (ya sea en API o en BDD)`
-  );
-});
-recipesRouter.get("/:id", (req, res) => {
-  const { id } = req.params;
-  res.send(
-    `Muestra el detalle de la receta ${id} (esté en la API o en la BDD)`
-  );
-});
+recipesRouter.get("/", getRecipesHandler);
 
-recipesRouter.post("/", (req, res) => {
-  res.send("Crea una nueva receta en la BD");
-});
+recipesRouter.get("/:id", getRecipeHandler);
+
+recipesRouter.post("/", postRecipeHandler);
 
 module.exports = recipesRouter;
