@@ -1,6 +1,8 @@
 const {
   createRecipe,
   getRecipeById,
+  getAllRecipes,
+  getRecipesByName,
 } = require("../controllers/recipesControllers");
 
 const getRecipeHandler = async (req, res) => {
@@ -16,11 +18,12 @@ const getRecipeHandler = async (req, res) => {
   }
 };
 
-const getRecipesHandler = (req, res) => {
+const getRecipesHandler = async (req, res) => {
   const { name } = req.query;
-  res.send(
-    `Muestra todas las recetas que coincidan con el nombre ${name} (ya sea en API o en BDD)`
-  );
+
+  const results = name ? getRecipesByName(name) : await getAllRecipes();
+
+  res.status(200).json(results);
 };
 /* const postDePrueba = {
 	
@@ -47,4 +50,10 @@ const postRecipeHandler = async (req, res) => {
   }
 };
 
-module.exports = { getRecipeHandler, getRecipesHandler, postRecipeHandler };
+module.exports = {
+  getRecipeHandler,
+  getRecipesHandler,
+  postRecipeHandler,
+  getAllRecipes,
+  getRecipesByName,
+};
