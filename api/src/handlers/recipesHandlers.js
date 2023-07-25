@@ -20,11 +20,19 @@ const getRecipeHandler = async (req, res) => {
 
 const getRecipesHandler = async (req, res) => {
   const { name } = req.query;
+  try {
+    const results = /* name ?  */ await getRecipesByName(
+      name
+    ); /* : await getAllRecipes(); */
 
-  const results = name ? getRecipesByName(name) : await getAllRecipes();
-
-  res.status(200).json(results);
+    if (results.length) {
+      res.status(200).json(results);
+    }
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };
+
 /* const postDePrueba = {
 	
   "name": "EJEMPLO3",

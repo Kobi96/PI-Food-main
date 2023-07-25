@@ -1,4 +1,5 @@
 require("dotenv").config();
+const { Op } = require("sequelize");
 const { Recipe } = require("../db");
 const axios = require("axios");
 const { API_KEY } = process.env;
@@ -54,4 +55,31 @@ const getAllRecipes = async () => {
   return [...dataBaseRecipes, ...apiRecipes];
 };
 
-module.exports = { createRecipe, getRecipeById, getAllRecipes };
+const getRecipesByName = async (name) => {
+  const dataBaseRecipes = await Recipe.findAll({
+    where: {
+      name: { [Op.iLike]: `%${name}%` },
+    },
+  });
+
+  /* const apiRecipesRaw = (
+    await axios.get(
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=40&addRecipeInformation=true`
+    )
+  ).data.results;
+
+  const apiRecipes = cleanArray(apiRecipesRaw);
+
+  const filteredApi = apiRecipes.filter((recipe) => {
+    const query = name.toLowerCase();
+    if (recipe.name.toLowerCase().includes(query)) return recipe;
+  }); */
+
+  return dataBaseRecipes; /* [...filteredApi, ...dataBaseRecipes]; */
+};
+module.exports = {
+  createRecipe,
+  getRecipeById,
+  getAllRecipes,
+  getRecipesByName,
+};
