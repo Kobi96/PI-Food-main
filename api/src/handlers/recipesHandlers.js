@@ -21,25 +21,23 @@ const getRecipeHandler = async (req, res) => {
 const getRecipesHandler = async (req, res) => {
   const { name } = req.query;
   try {
-    const results = /* name ?  */ await getRecipesByName(
-      name
-    ); /* : await getAllRecipes(); */
+    const results = name ? await getRecipesByName(name) : await getAllRecipes();
 
-    if (results.length) {
-      res.status(200).json(results);
-    }
+    return results.length
+      ? res.status(200).json(results)
+      : res.status(400).json(`No se ha encontrado la receta ${name}`);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
 /* const postDePrueba = {
 	
-  "name": "EJEMPLO3",
-  "image": "LINK3",
-  "summary": "texto3",
+  "name": "EJEMPLO",
+  "image": "LINK",
+  "summary": "texto",
   "healthScore": 4,
-  "instructions": "queso y dulce" 
+  "instructions": "TEXTO" 
 } */
 const postRecipeHandler = async (req, res) => {
   try {

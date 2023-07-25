@@ -2,7 +2,7 @@ require("dotenv").config();
 const { Op } = require("sequelize");
 const { Recipe } = require("../db");
 const axios = require("axios");
-const { API_KEY } = process.env;
+const { API_KEY, API_KEY2 } = process.env;
 
 const cleanArray = (arr) => {
   const array = arr.map((ele) => {
@@ -29,16 +29,18 @@ const createRecipe = async (name, image, summary, healthScore, instructions) =>
   await Recipe.create({ name, image, summary, healthScore, instructions });
 
 const getRecipeById = async (id, source) => {
-  const recipe =
-    source === "api"
-      ? (
-          await axios.get(
-            `https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY}`
-          )
-        ).data
-      : Recipe.findByPk(id);
+  if (source === "api") {
+    const recipe = (
+      await axios.get(
+        `https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY}`
+      )
+    ).data;
 
-  return recipe;
+    const cleanRecipe = cleanArray([recipe]);
+
+    return cleanRecipe[0];
+  }
+  return Recipe.findByPk(id);
 };
 
 const getAllRecipes = async () => {
@@ -46,7 +48,7 @@ const getAllRecipes = async () => {
 
   const apiRecipesRaw = (
     await axios.get(
-      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=40&addRecipeInformation=true`
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=10&addRecipeInformation=true`
     )
   ).data.results;
 
@@ -62,7 +64,7 @@ const getRecipesByName = async (name) => {
     },
   });
 
-  /* const apiRecipesRaw = (
+  const apiRecipesRaw = (
     await axios.get(
       `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=40&addRecipeInformation=true`
     )
@@ -73,9 +75,9 @@ const getRecipesByName = async (name) => {
   const filteredApi = apiRecipes.filter((recipe) => {
     const query = name.toLowerCase();
     if (recipe.name.toLowerCase().includes(query)) return recipe;
-  }); */
+  });
 
-  return dataBaseRecipes; /* [...filteredApi, ...dataBaseRecipes]; */
+  return [...filteredApi, ...dataBaseRecipes];
 };
 module.exports = {
   createRecipe,
