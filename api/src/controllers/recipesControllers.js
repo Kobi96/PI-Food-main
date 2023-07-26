@@ -1,8 +1,10 @@
 require("dotenv").config();
 const { Op } = require("sequelize");
-const { Recipe } = require("../db");
+const { Recipe, Diet } = require("../db");
+const getAllDiets = require("./dietsController");
 const axios = require("axios");
-const { API_KEY, API_KEY2 } = process.env;
+const { API_KEY } = process.env;
+const recipes = require("../recipes.json");
 
 const cleanArray = (arr) => {
   const array = arr.map((ele) => {
@@ -25,9 +27,42 @@ const cleanArray = (arr) => {
   return array;
 };
 
-const createRecipe = async (name, image, summary, healthScore, instructions) =>
-  await Recipe.create({ name, image, summary, healthScore, instructions });
+const createRecipe = async (
+  name,
+  image,
+  summary,
+  healthScore,
+  instructions,
+  diets
+) => {
+  if (!name || !image || !summary || !healthScore || !instructions || !diets) {
+    return "Faltan datos por ingresar";
+  }
 
+  const existingRecipe = await Recipe.findOne({ where: { name } });
+
+  if (existingRecipe) {
+    return `La receta ${name} ya existe`;
+  }
+  const newRecipe = await Recipe.create({
+    name,
+    image,
+    summary,
+    healthScore,
+    instructions,
+  });
+
+  const db = await Diet.findAll();
+
+  if (db.length) {
+    newRecipe.addDiets(diets);
+  } else {
+    getAllDiets();
+    newRecipe.addDiets(diets);
+  }
+
+  return newRecipe;
+};
 const getRecipeById = async (id, source) => {
   if (source === "api") {
     const recipe = (
@@ -46,11 +81,11 @@ const getRecipeById = async (id, source) => {
 const getAllRecipes = async () => {
   const dataBaseRecipes = await Recipe.findAll();
 
-  const apiRecipesRaw = (
+  const apiRecipesRaw = recipes.results; /* (
     await axios.get(
       `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=10&addRecipeInformation=true`
     )
-  ).data.results;
+  ).data.results; */
 
   const apiRecipes = cleanArray(apiRecipesRaw);
 
@@ -66,7 +101,7 @@ const getRecipesByName = async (name) => {
 
   const apiRecipesRaw = (
     await axios.get(
-      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=40&addRecipeInformation=true`
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=100&addRecipeInformation=true`
     )
   ).data.results;
 

@@ -1,3 +1,4 @@
+const { Sequelize } = require("sequelize");
 const {
   createRecipe,
   getRecipeById,
@@ -41,13 +42,14 @@ const getRecipesHandler = async (req, res) => {
 } */
 const postRecipeHandler = async (req, res) => {
   try {
-    const { name, image, summary, healthScore, instructions } = req.body;
+    const { name, image, summary, healthScore, instructions, diets } = req.body;
     const newRecipe = await createRecipe(
       name,
       image,
       summary,
       healthScore,
-      instructions
+      instructions,
+      diets
     );
 
     res.status(201).json(newRecipe);
