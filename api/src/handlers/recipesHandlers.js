@@ -1,4 +1,3 @@
-const { Sequelize } = require("sequelize");
 const {
   createRecipe,
   getRecipeById,
@@ -43,6 +42,17 @@ const getRecipesHandler = async (req, res) => {
 const postRecipeHandler = async (req, res) => {
   try {
     const { name, image, summary, healthScore, instructions, diets } = req.body;
+    if (
+      !name ||
+      !image ||
+      !summary ||
+      !healthScore ||
+      !instructions ||
+      !diets
+    ) {
+      return res.status(400).json(`Faltan datos`);
+    }
+
     const newRecipe = await createRecipe(
       name,
       image,
@@ -54,7 +64,7 @@ const postRecipeHandler = async (req, res) => {
 
     res.status(201).json(newRecipe);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 

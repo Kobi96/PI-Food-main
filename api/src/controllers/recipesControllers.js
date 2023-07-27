@@ -24,6 +24,7 @@ const cleanArray = (arr) => {
       created: false,
     };
   });
+
   return array;
 };
 
@@ -35,14 +36,10 @@ const createRecipe = async (
   instructions,
   diets
 ) => {
-  if (!name || !image || !summary || !healthScore || !instructions || !diets) {
-    return "Faltan datos por ingresar";
-  }
-
   const existingRecipe = await Recipe.findOne({ where: { name } });
 
   if (existingRecipe) {
-    return `La receta ${name} ya existe`;
+    return `Ya existe la receta con el nombre ${name}`;
   }
   const newRecipe = await Recipe.create({
     name,
@@ -63,14 +60,15 @@ const createRecipe = async (
 
   return newRecipe;
 };
+
 const getRecipeById = async (id, source) => {
+  // No se puede hardcodear. Siempre devuelve la misma receta
   if (source === "api") {
     const recipe = (
       await axios.get(
         `https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY}`
       )
     ).data;
-
     const cleanRecipe = cleanArray([recipe]);
 
     return cleanRecipe[0];
@@ -99,11 +97,11 @@ const getRecipesByName = async (name) => {
     },
   });
 
-  const apiRecipesRaw = (
+  const apiRecipesRaw = recipes.results; /* (
     await axios.get(
       `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=100&addRecipeInformation=true`
     )
-  ).data.results;
+  ).data.results; */
 
   const apiRecipes = cleanArray(apiRecipesRaw);
 
