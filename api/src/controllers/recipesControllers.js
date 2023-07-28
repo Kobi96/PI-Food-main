@@ -6,6 +6,22 @@ const axios = require("axios");
 const { API_KEY } = process.env;
 const recipes = require("../recipes.json");
 
+const cleanDiet = (arr) => {
+  const array = arr.map((ele) => {
+    return {
+      id: ele.id,
+      name: ele.name,
+      image: ele.image,
+      summary: ele.summary,
+      healthScore: ele.healthScore,
+      instructions: ele.instructions,
+      created: true,
+      diets: ele.diets.map((diet) => diet.name),
+    };
+  });
+
+  return array;
+};
 const cleanArray = (arr) => {
   const array = arr.map((ele) => {
     return {
@@ -14,6 +30,7 @@ const cleanArray = (arr) => {
       image: ele.image,
       summary: ele.summary,
       healthScore: ele.healthScore,
+      diets: ele.diets.map((ele) => ele),
       instructions: ele.analyzedInstructions.reduce(
         (accumulator, instruction) => {
           const steps = instruction.steps.map((step) => step.step);
@@ -48,37 +65,69 @@ const createRecipe = async (
     healthScore,
     instructions,
   });
-
   const db = await Diet.findAll();
 
   if (db.length) {
-    newRecipe.addDiets(diets);
+    await newRecipe.addDiets(diets);
   } else {
     getAllDiets();
-    newRecipe.addDiets(diets);
+    await newRecipe.addDiets(diets);
   }
 
-  return newRecipe;
+  const newRecipeWithDietRaw = await Recipe.findOne({
+    where: { name: name },
+    include: {
+      model: Diet,
+      attributes: ["name"],
+      through: {
+        attributes: [],
+      },
+    },
+  });
+
+  const newRecipeWithDiet = cleanDiet([newRecipeWithDietRaw]);
+
+  return newRecipeWithDiet;
 };
 
 const getRecipeById = async (id, source) => {
   // No se puede hardcodear. Siempre devuelve la misma receta
   if (source === "api") {
-    const recipe = (
+    const apiRecipe = (
       await axios.get(
         `https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY}`
       )
     ).data;
-    const cleanRecipe = cleanArray([recipe]);
+    const cleanRecipe = cleanArray([apiRecipe]);
 
     return cleanRecipe[0];
   }
-  return Recipe.findByPk(id);
+  const dbbRecipeRaw = await Recipe.findByPk(id, {
+    include: {
+      model: Diet,
+      attributes: ["name"],
+      through: {
+        attributes: [],
+      },
+    },
+  });
+
+  const dbbRecipe = cleanDiet([dbbRecipeRaw]);
+  console.log(dbbRecipeRaw);
+  return dbbRecipe;
 };
 
 const getAllRecipes = async () => {
-  const dataBaseRecipes = await Recipe.findAll();
-
+  const dbbRecipesRaw = await Recipe.findAll({
+    include: {
+      model: Diet,
+      attributes: ["name"],
+      through: {
+        attributes: [],
+      },
+    },
+  });
+  const dbbRecipes = cleanDiet(dbbRecipesRaw);
   const apiRecipesRaw = recipes.results; /* (
     await axios.get(
       `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=10&addRecipeInformation=true`
@@ -87,15 +136,25 @@ const getAllRecipes = async () => {
 
   const apiRecipes = cleanArray(apiRecipesRaw);
 
-  return [...dataBaseRecipes, ...apiRecipes];
+  return [...dbbRecipes, ...apiRecipes];
 };
 
 const getRecipesByName = async (name) => {
-  const dataBaseRecipes = await Recipe.findAll({
+  const dbbRecipeRaw = await Recipe.findAll({
     where: {
-      name: { [Op.iLike]: `%${name}%` },
+      name: {
+        [Op.iLike]: `%${name}%`,
+      },
+    },
+    include: {
+      model: Diet,
+      attributes: ["name"],
+      through: {
+        attributes: [],
+      },
     },
   });
+  const dbbRecipe = cleanDiet(dbbRecipeRaw);
 
   const apiRecipesRaw = recipes.results; /* (
     await axios.get(
@@ -110,7 +169,7 @@ const getRecipesByName = async (name) => {
     if (recipe.name.toLowerCase().includes(query)) return recipe;
   });
 
-  return [...filteredApi, ...dataBaseRecipes];
+  return [...filteredApi, ...dbbRecipe];
 };
 module.exports = {
   createRecipe,
