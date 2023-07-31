@@ -1,5 +1,5 @@
 import { Home, Landing, Form, Detail } from "./views";
-import NavBar from "./components/NavBar";
+import NavBar from "./components/NavBar/NavBar";
 import { Route, useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
 function App() {
