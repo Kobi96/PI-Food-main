@@ -1,20 +1,7 @@
 require("dotenv").config();
 const { Diet } = require("../db");
-const axios = require("axios");
-const { API_KEY } = process.env;
+const { cleanDiets } = require("../utils");
 const recipes = require("../recipes.json");
-
-const cleanDiets = (arr) => {
-  const array = arr.map((ele) => ele.diets).flat();
-
-  const dietsRaw = array.filter((valor, indice) => {
-    return array.indexOf(valor) === indice;
-  });
-
-  const diets = dietsRaw.map((name) => ({ name }));
-
-  return diets;
-};
 
 const getAllDiets = async () => {
   const apiDietsRaw = recipes.results;

@@ -1,8 +1,190 @@
+import style from "./Form.module.css";
+import { useState } from "react";
+import { postRecipe } from "../../redux/actions";
+import { useDispatch } from "react-redux";
+
 const Form = () => {
+  const dispatch = useDispatch();
+
+  const [form, setForm] = useState({
+    name: "",
+    image: "",
+    summary: "",
+    healthScore: 0,
+    instructions: "",
+    diets: [],
+  });
+  const [aux, setAux] = useState([]);
+
+  const changeHandler = (event) => {
+    const property = event.target.name;
+    const value = event.target.value;
+
+    setForm({ ...form, [property]: value });
+  };
+
+  const dietsHandler = (event) => {
+    const id = event.target.id;
+
+    setAux([...aux, Number(id)]);
+
+    const countOccurrences = (array, number) => {
+      return array.reduce((count, current) => {
+        if (current === number) {
+          return count + 1;
+        }
+        return count;
+      }, 0);
+    };
+
+    const finalCount = countOccurrences(aux, Number(id));
+
+    if (finalCount % 2 === 0) {
+      setForm({ ...form, diets: [...form.diets, Number(id)] });
+    } else if (finalCount % 2 === 1) {
+      const filteredDiets = form.diets.filter(
+        (dietId) => dietId !== Number(id)
+      );
+      setForm({ ...form, diets: filteredDiets });
+    }
+  };
+
+  const submitHandler = (event) => {
+    event.preventDefault();
+    dispatch(postRecipe(form));
+    setForm({
+      name: "",
+      image: "",
+      summary: "",
+      healthScore: 0,
+      instructions: "",
+      diets: [],
+    });
+    setAux([]);
+
+    alert("Tu receta ha sido creada!");
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
+  };
+
   return (
-    <>
-      <h1>Esta es la vista de Form</h1>
-    </>
+    <div>
+      <form className={style.form_container} onSubmit={submitHandler}>
+        <label>Nombre:</label>
+        <input
+          type="text"
+          name="name"
+          value={form.name}
+          onChange={changeHandler}
+          required
+        />
+        <label for="resumen">Resumen del plato:</label>
+        <textarea
+          name="summary"
+          value={form.summary}
+          onChange={changeHandler}
+          required
+        ></textarea>
+        <label for="healthScore">
+          Nivel de comida saludable (del 1 al 100):
+        </label>
+        <input
+          type="number"
+          name="healthScore"
+          value={form.healthScore}
+          onChange={changeHandler}
+          required
+        />
+        <label for="pasos">Paso a paso:</label>
+        <textarea
+          name="instructions"
+          value={form.instructions}
+          onChange={changeHandler}
+          required
+        ></textarea>
+        <label for="imagen">Imagen:</label>
+        <input
+          type="text"
+          name="image"
+          value={form.image}
+          autoComplete="off"
+          onChange={changeHandler}
+        ></input>
+        <label>Tipos de dieta:</label>
+        <input
+          type="checkbox"
+          id={1}
+          value={form.diets}
+          onChange={dietsHandler}
+        />{" "}
+        Gluten Free
+        <input
+          type="checkbox"
+          id={2}
+          value={form.diets}
+          onChange={dietsHandler}
+        />{" "}
+        Dairy Free
+        <input
+          type="checkbox"
+          id={3}
+          value={form.diets}
+          onChange={dietsHandler}
+        />{" "}
+        Lacto Ovo Vegetarian
+        <input
+          type="checkbox"
+          id={4}
+          value={form.diets}
+          onChange={dietsHandler}
+        />{" "}
+        Vegan
+        <input
+          type="checkbox"
+          id={5}
+          value={form.diets}
+          onChange={dietsHandler}
+        />{" "}
+        Paleolithic
+        <input
+          type="checkbox"
+          id={6}
+          value={form.diets}
+          onChange={dietsHandler}
+        />{" "}
+        Primal
+        <input
+          type="checkbox"
+          id={7}
+          value={form.diets}
+          onChange={dietsHandler}
+        />{" "}
+        Whole 30
+        <input
+          type="checkbox"
+          id={8}
+          value={form.diets}
+          onChange={dietsHandler}
+        />{" "}
+        Pescatarian
+        <input
+          type="checkbox"
+          id={9}
+          value={form.diets}
+          onChange={dietsHandler}
+        />{" "}
+        Ketogenic
+        <input
+          type="checkbox"
+          id={10}
+          value={form.diets}
+          onChange={dietsHandler}
+        />{" "}
+        Fodmap Friendly
+        <button type="submit">Crear Receta</button>
+      </form>
+    </div>
   );
 };
 
