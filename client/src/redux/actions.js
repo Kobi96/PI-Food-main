@@ -1,6 +1,7 @@
 import {
   GET_RECIPES,
-  GET_RECIPE,
+  GET_RECIPE_BY_NAME,
+  GET_RECIPE_BY_ID,
   GET_DIETS,
   POST_RECIPE,
   FILTER,
@@ -23,16 +24,26 @@ const getDiets = () => {
     dispatch({ type: GET_DIETS, payload: diets });
   };
 };
-const getRecipe = (name) => {
+const getRecipeByName = (name) => {
   return async function (dispatch) {
     const apiData = await axios.get(
       `http://localhost:3001/food/recipes/${name}`
     );
     const recipe = apiData.data;
-    dispatch({ type: GET_RECIPE, payload: recipe });
+    dispatch({ type: GET_RECIPE_BY_NAME, payload: recipe });
   };
 };
-
+const getRecipeById = (id) => {
+  return async function (dispatch) {
+    const apiData = await axios.get(`http://localhost:3001/food/recipes/${id}`);
+    const recipe = apiData.data;
+    if (Array.isArray(recipe)) {
+      dispatch({ type: GET_RECIPE_BY_ID, payload: recipe[0] });
+    } else {
+      dispatch({ type: GET_RECIPE_BY_ID, payload: recipe });
+    }
+  };
+};
 const postRecipe = (recipe) => {
   return async (dispatch) => {
     const { data } = await axios.post(
@@ -54,7 +65,8 @@ const orderRecipes = (order) => {
 export {
   getRecipes,
   getDiets,
-  getRecipe,
+  getRecipeByName,
+  getRecipeById,
   postRecipe,
   filterRecipes,
   orderRecipes,

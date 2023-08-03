@@ -1,8 +1,9 @@
-import { GET_RECIPES, GET_DIETS, POST_RECIPE } from "./types";
+import { GET_RECIPES, GET_DIETS, POST_RECIPE, GET_RECIPE_BY_ID } from "./types";
 
 const initialState = {
   recipes: [],
   diets: [],
+  recipeDetail: {},
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -14,6 +15,11 @@ const rootReducer = (state = initialState, action) => {
       };
     case GET_RECIPES:
       return { ...state, recipes: action.payload };
+    case GET_RECIPE_BY_ID:
+      return {
+        ...state,
+        recipeDetail: action.payload,
+      };
     case GET_DIETS:
       return {
         ...state,
