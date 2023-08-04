@@ -52,16 +52,6 @@ const Form = () => {
   const submitHandler = (event) => {
     event.preventDefault();
     dispatch(postRecipe(form));
-    setForm({
-      name: "",
-      image: "",
-      summary: "",
-      healthScore: 0,
-      instructions: "",
-      diets: [],
-    });
-    setAux([]);
-
     alert("Tu receta ha sido creada!");
     setTimeout(() => {
       window.location.reload();

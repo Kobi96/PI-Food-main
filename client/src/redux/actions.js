@@ -37,11 +37,8 @@ const getRecipeById = (id) => {
   return async function (dispatch) {
     const apiData = await axios.get(`http://localhost:3001/food/recipes/${id}`);
     const recipe = apiData.data;
-    if (Array.isArray(recipe)) {
-      dispatch({ type: GET_RECIPE_BY_ID, payload: recipe[0] });
-    } else {
-      dispatch({ type: GET_RECIPE_BY_ID, payload: recipe });
-    }
+
+    dispatch({ type: GET_RECIPE_BY_ID, payload: recipe });
   };
 };
 const postRecipe = (recipe) => {

@@ -7,14 +7,13 @@ import style from "./Detail.module.css";
 
 const Detail = () => {
   const recipe = useSelector((state) => state.recipeDetail);
-  console.log(recipe);
   const id = useParams().id;
-  
+
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log(id);
     if (id) dispatch(getRecipeById(id));
-  }, [id]);
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div>

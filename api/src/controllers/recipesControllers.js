@@ -75,8 +75,7 @@ const getRecipeById = async (id, source) => {
   });
 
   const dbbRecipe = cleanDiet([dbbRecipeRaw]);
-  console.log(dbbRecipeRaw);
-  return dbbRecipe;
+  return dbbRecipe[0];
 };
 
 const getAllRecipes = async () => {
