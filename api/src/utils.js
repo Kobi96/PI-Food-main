@@ -20,7 +20,9 @@ const cleanDiet = (arr) => {
       healthScore: ele.healthScore,
       instructions: ele.instructions,
       created: true,
-      diets: ele.diets.map((diet) => diet.name),
+      diets: ele.diets
+        .map((diet) => diet.name.replace(/\b\w/g, (char) => char.toUpperCase()))
+        .join(", "),
     };
   });
 
@@ -34,7 +36,9 @@ const cleanArray = (arr) => {
       image: ele.image,
       summary: ele.summary,
       healthScore: ele.healthScore,
-      diets: ele.diets.map((ele) => ele),
+      diets: ele.diets
+        .map((diet) => diet.replace(/\b\w/g, (char) => char.toUpperCase()))
+        .join(", "),
       instructions: ele.analyzedInstructions.reduce(
         (accumulator, instruction) => {
           const steps = instruction.steps.map((step) => step.step);

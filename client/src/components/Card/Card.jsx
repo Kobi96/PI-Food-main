@@ -7,7 +7,7 @@ const Card = (props) => {
       <Link to={`/detail/${props.id}`}>
         <h1>{props.name}</h1>
       </Link>
-      <p>Diets:{props.diets.map((diet) => diet + " ")}</p>
+      <p>Diets:{props.diets}</p>
       <img src={props.image} alt="" />
     </div>
   );

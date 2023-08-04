@@ -18,7 +18,7 @@ const Detail = () => {
   return (
     <div>
       <h1>{recipe?.name}</h1>
-      <h2>{recipe?.summary}</h2>
+      <p dangerouslySetInnerHTML={{ __html: recipe.summary }} />
       <h2>{recipe?.healthScore}</h2>
       <h2>{recipe?.instructions}</h2>
       <h2>{recipe?.diets}</h2>
