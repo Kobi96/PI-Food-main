@@ -43,10 +43,9 @@ const getRecipeById = (id) => {
 };
 const postRecipe = (recipe) => {
   return async (dispatch) => {
-    const { data } = await axios.post(
-      "http://localhost:3001/food/recipes",
-      recipe
-    );
+    const { data } = await axios
+      .post("http://localhost:3001/food/recipes", recipe)
+      .then(alert("Receta Creada"));
     dispatch({ type: POST_RECIPE, payload: data });
   };
 };

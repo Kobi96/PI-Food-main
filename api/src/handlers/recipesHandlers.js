@@ -42,16 +42,6 @@ const getRecipesHandler = async (req, res) => {
 const postRecipeHandler = async (req, res) => {
   try {
     const { name, image, summary, healthScore, instructions, diets } = req.body;
-    if (
-      !name ||
-      !image ||
-      !summary ||
-      !healthScore ||
-      !instructions ||
-      !diets
-    ) {
-      return res.status(400).json(`Faltan datos`);
-    }
 
     const newRecipe = await createRecipe(
       name,
@@ -61,7 +51,7 @@ const postRecipeHandler = async (req, res) => {
       instructions,
       diets
     );
-
+    //      throw new Error (`Faltan datos`);
     res.status(201).json(newRecipe);
   } catch (error) {
     res.status(500).json({ error: error.message });

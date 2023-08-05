@@ -2,10 +2,12 @@ import style from "./Form.module.css";
 import { useState } from "react";
 import { postRecipe } from "../../redux/actions";
 import { useDispatch } from "react-redux";
+import validator from "./validation";
 
 const Form = () => {
   const dispatch = useDispatch();
 
+  // Estados locales
   const [form, setForm] = useState({
     name: "",
     image: "",
@@ -14,13 +16,16 @@ const Form = () => {
     instructions: "",
     diets: [],
   });
+  const [errors, setErrors] = useState({});
   const [aux, setAux] = useState([]);
 
+  //Funciones Handlers
   const changeHandler = (event) => {
     const property = event.target.name;
     const value = event.target.value;
 
     setForm({ ...form, [property]: value });
+    setErrors({});
   };
 
   const dietsHandler = (event) => {
@@ -41,26 +46,36 @@ const Form = () => {
 
     if (finalCount % 2 === 0) {
       setForm({ ...form, diets: [...form.diets, Number(id)] });
+      setErrors({});
     } else if (finalCount % 2 === 1) {
       const filteredDiets = form.diets.filter(
         (dietId) => dietId !== Number(id)
       );
       setForm({ ...form, diets: filteredDiets });
+      if (form.diets.length) setErrors({});
     }
   };
 
   const submitHandler = (event) => {
     event.preventDefault();
-    dispatch(postRecipe(form));
-    alert("Tu receta ha sido creada!");
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000);
+    const validationErrors = validator(form);
+    setErrors(validationErrors);
+    console.log(validationErrors);
+    if (Object.keys(validationErrors).length === 0) {
+      dispatch(postRecipe(form));
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    }
   };
 
   return (
     <div>
-      <form className={style.form_container} onSubmit={submitHandler}>
+      <form
+        className={style.form_container}
+        onSubmit={submitHandler}
+        noValidate
+      >
         <label>Nombre:</label>
         <input
           type="text"
@@ -69,6 +84,7 @@ const Form = () => {
           onChange={changeHandler}
           required
         />
+        {errors.name && <p className={style.errors}>{errors.name}</p>}
         <label for="resumen">Resumen del plato:</label>
         <textarea
           name="summary"
@@ -76,6 +92,7 @@ const Form = () => {
           onChange={changeHandler}
           required
         ></textarea>
+        {errors.summary && <p className={style.errors}>{errors.summary}</p>}
         <label for="healthScore">
           Nivel de comida saludable (del 1 al 100):
         </label>
@@ -86,6 +103,9 @@ const Form = () => {
           onChange={changeHandler}
           required
         />
+        {errors.healthScore && (
+          <p className={style.errors}>{errors.healthScore}</p>
+        )}
         <label for="pasos">Paso a paso:</label>
         <textarea
           name="instructions"
@@ -93,6 +113,9 @@ const Form = () => {
           onChange={changeHandler}
           required
         ></textarea>
+        {errors.instructions && (
+          <p className={style.errors}>{errors.instructions}</p>
+        )}
         <label for="imagen">Imagen:</label>
         <input
           type="text"
@@ -101,7 +124,9 @@ const Form = () => {
           autoComplete="off"
           onChange={changeHandler}
         ></input>
+        {errors.image && <p className={style.errors}>{errors.image}</p>}
         <label>Tipos de dieta:</label>
+        {errors.diets && <p className={style.errors}>{errors.diets}</p>}
         <input
           type="checkbox"
           id={1}
