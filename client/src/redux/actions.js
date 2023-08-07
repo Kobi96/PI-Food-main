@@ -27,7 +27,7 @@ const getDiets = () => {
 const getRecipeByName = (name) => {
   return async function (dispatch) {
     const apiData = await axios.get(
-      `http://localhost:3001/food/recipes/${name}`
+      `http://localhost:3001/food/recipes?name=${name}`
     );
     const recipe = apiData.data;
     dispatch({ type: GET_RECIPE_BY_NAME, payload: recipe });
