@@ -12,7 +12,7 @@ const Home = () => {
   }, []);
   return (
     <>
-      <h1>Esta es la vista de Home</h1>
+      <h1>Qué te apetece hoy?</h1>
       <CardsContainer />
     </>
   );

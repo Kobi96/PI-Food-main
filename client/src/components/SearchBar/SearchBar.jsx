@@ -24,13 +24,13 @@ const SearchBar = () => {
     <div>
       <input
         type="search"
-        placeholder="Recipes"
+        placeholder="Recetas"
         autoComplete="off"
         onChange={handleChange}
         value={name}
       />
 
-      <button onClick={onSearch}>Agregar</button>
+      <button onClick={onSearch}>Buscar</button>
     </div>
   );
 };
