@@ -4,8 +4,7 @@ import {
   GET_RECIPE_BY_ID,
   GET_DIETS,
   POST_RECIPE,
-  FILTER,
-  ORDER,
+  FILTER_ORDER,
 } from "./types";
 import axios from "axios";
 
@@ -50,12 +49,8 @@ const postRecipe = (recipe) => {
   };
 };
 
-const filter = (recipes) => {
-  return { type: FILTER, payload: recipes };
-};
-
-const orderRecipes = (order) => {
-  return { type: ORDER, payload: order };
+const filterOrder = (recipes) => {
+  return { type: FILTER_ORDER, payload: recipes };
 };
 
 export {
@@ -64,6 +59,5 @@ export {
   getRecipeByName,
   getRecipeById,
   postRecipe,
-  filter,
-  orderRecipes,
+  filterOrder,
 };

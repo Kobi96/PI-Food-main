@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getRecipes, filter } from "../../redux/actions";
+import { getRecipes, filterOrder } from "../../redux/actions";
 import "./ToolBar.module.css";
 
 const ToolBar = () => {
@@ -18,7 +18,7 @@ const ToolBar = () => {
       setTimeout(() => {
         setOriginalRecipes(recipes);
         setHasExecuted(true);
-      }, 1000);
+      }, 1500);
     }
   }, [recipes, hasExecuted]);
 
@@ -30,7 +30,7 @@ const ToolBar = () => {
     const filteredRecipesByDiet = originalRecipes.filter((recipe) =>
       recipe.diets.toLowerCase().includes(diet)
     );
-    dispatch(filter(filteredRecipesByDiet));
+    dispatch(filterOrder(filteredRecipesByDiet));
   };
 
   const originChangeHandler = (event) => {
@@ -50,18 +50,42 @@ const ToolBar = () => {
       );
     }
 
-    dispatch(filter(filteredRecipesByOrigin));
+    dispatch(filterOrder(filteredRecipesByOrigin));
+  };
+
+  const orderChangeHandler = (event) => {
+    const order = event.target.value;
+
+    if (order === "default") return dispatch(getRecipes());
+
+    let sortedRecipes;
+
+    if (order === "A-z") {
+      sortedRecipes = [...originalRecipes].sort((a, b) =>
+        a.name.localeCompare(b.name)
+      );
+    } else if (order === "Z-a") {
+      sortedRecipes = [...originalRecipes].sort((a, b) =>
+        b.name.localeCompare(a.name)
+      );
+    } else if (order === "L-H") {
+      sortedRecipes = [...originalRecipes].sort(
+        (a, b) => a.healthScore - b.healthScore
+      );
+    } else if (order === "H-L") {
+      sortedRecipes = [...originalRecipes].sort(
+        (a, b) => b.healthScore - a.healthScore
+      );
+    }
+
+    dispatch(filterOrder(sortedRecipes));
   };
 
   return (
     <div className="toolbar">
       <div className="orderContainer">
         <span>Ordenar por:</span>
-        <select
-          /*           onChange={(e) => handleChange(e)}
-           */ defaultValue={"default"}
-          className="selectMain"
-        >
+        <select onChange={orderChangeHandler} className="selectMain">
           <option value="default">Ordenar por...</option>
           <option value="A-z">A-z</option>
           <option value="Z-a">Z-a</option>

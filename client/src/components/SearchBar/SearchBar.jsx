@@ -19,7 +19,6 @@ const SearchBar = () => {
   const onSearch = () => {
     dispatch(getRecipeByName(name));
   };
-  console.log(name);
 
   return (
     <div>
