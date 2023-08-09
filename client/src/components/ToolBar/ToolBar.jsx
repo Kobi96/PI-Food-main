@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getRecipes, filterByDiets } from "../../redux/actions";
+import { getRecipes, filter } from "../../redux/actions";
 import "./ToolBar.module.css";
 
 const ToolBar = () => {
@@ -25,14 +25,32 @@ const ToolBar = () => {
   const dietChangeHandler = (event) => {
     const diet = event.target.value;
 
-    console.log(diet);
-    if (diet === "allDiets") dispatch(getRecipes());
+    if (diet === "allDiets") return dispatch(getRecipes());
 
-    const filteredRecipes = originalRecipes.filter((recipe) =>
+    const filteredRecipesByDiet = originalRecipes.filter((recipe) =>
       recipe.diets.toLowerCase().includes(diet)
     );
-    console.log(filteredRecipes);
-    dispatch(filterByDiets(filteredRecipes));
+    dispatch(filter(filteredRecipesByDiet));
+  };
+
+  const originChangeHandler = (event) => {
+    const origin = event.target.value;
+
+    if (origin === "allRecipes") return dispatch(getRecipes());
+
+    let filteredRecipesByOrigin;
+
+    if (origin === "apiRecipes") {
+      filteredRecipesByOrigin = originalRecipes.filter(
+        (recipe) => recipe.created === false
+      );
+    } else if (origin === "dbbRecipes") {
+      filteredRecipesByOrigin = originalRecipes.filter(
+        (recipe) => recipe.created === true
+      );
+    }
+
+    dispatch(filter(filteredRecipesByOrigin));
   };
 
   return (
@@ -66,17 +84,10 @@ const ToolBar = () => {
       </div>
       <div>
         <span>Filtrar por Origen:</span>
-        <select
-        /*           onChange={(e) => handleChangeBdd(e)} className="selectMain"
-         */
-        >
-          <option value="TODAS">Todas</option>
-          {/* <option value="Bdd" disabled={!recipesBdd.length > 0} key="Bdd">
-            Propias
-          </option> */}
-          <option value="Api" key="Api">
-            API
-          </option>
+        <select onChange={originChangeHandler} className="selectMain">
+          <option value="allRecipes">Todas</option>
+          <option value="apiRecipes">Recetas Originales</option>
+          <option value="dbbRecipes">Recetas Creadas por Vos!</option>
         </select>
       </div>
     </div>

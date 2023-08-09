@@ -3,7 +3,7 @@ const GET_DIETS = "GET_DIETS";
 const GET_RECIPE_BY_NAME = "GET_RECIPE_BY_NAME";
 const GET_RECIPE_BY_ID = "GET_RECIPE_BY_ID";
 const POST_RECIPE = "POST_RECIPE";
-const FILTER_BY_DIETS = "FILTER_BY_DIETS";
+const FILTER = "FILTER";
 const ORDER = "ORDER";
 
 module.exports = {
@@ -11,7 +11,7 @@ module.exports = {
   GET_DIETS,
   GET_RECIPE_BY_ID,
   GET_RECIPE_BY_NAME,
-  FILTER_BY_DIETS,
+  FILTER,
   ORDER,
   POST_RECIPE,
 };
