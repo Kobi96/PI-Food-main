@@ -1,44 +1,33 @@
 import React from "react";
-/* import { useDispatch, useSelector } from "react-redux";
-import {
-  orderByHealth,
-  orderByRecipe,
-  filterByDiets,
-  filterByBdd,
-} from "../../redux/actions/index"; */
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getRecipes, getDiets, filterByDiets } from "../../redux/actions";
 import "./ToolBar.module.css";
 
 const ToolBar = () => {
-  /* const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const [dietFilterState, setDietFilterState] = useState([]);
+  const [auxRecipesState, setAuxRecipesState] = useState([]);
 
-  const recipesBdd = useSelector((state) => state.recipes).filter(
-    (elem) => elem.id > 10000000
-  );
-
+  const recipes = useSelector((state) => state.recipes);
   const dietList = useSelector((state) => state.diets);
-  const diestByName = dietList?.map((elem) => elem.nombre); */
+  const dietsByName = dietList.map((diet) => diet.name);
 
-  /* const handleChange = (event) => {
-    if (event.target.value === "A-z" || event.target.value === "Z-a") {
-      dispatch(orderByRecipe(event.target.value));
-      setCurrentPage(0);
-      setSortBy(event.target.value);
-    } else {
-      dispatch(orderByHealth(event.target.value));
-      setCurrentPage(0);
-      setSortBy(event.target.value);
-    }
-  }; */
+  if (!auxRecipesState.length) setAuxRecipesState(recipes);
+  console.log(auxRecipesState);
 
-  /* const handleChangeDiets = (event) => {
-    dispatch(filterByDiets(event.target.value));
-    setCurrentPage(0);
+  const dietChangeHandler = (event) => {
+    const diet = event.target.value;
+    dispatch(getRecipes());
+    const filteredRecipes = recipes.filter((recipe) =>
+      recipe.diets.toLowerCase().includes(diet)
+    );
+    setDietFilterState(filteredRecipes);
   };
 
-  const handleChangeBdd = (event) => {
-    dispatch(filterByBdd(event.target.value));
-    setCurrentPage(0);
-  }; */
+  useEffect(() => {
+    dispatch(filterByDiets(dietFilterState));
+  }, [dispatch, dietFilterState]);
 
   return (
     <div className="toolbar">
@@ -58,17 +47,15 @@ const ToolBar = () => {
       </div>
       <div className="filterContainer">
         <span>Filtrar dietas:</span>
-        <select
-          /* onChange={(e) => handleChangeDiets(e)} */ className="selectMain"
-        >
+        <select onChange={dietChangeHandler} className="selectMain">
           <option value="allDiets">Todas las dietas</option>
-          {/* {diestByName?.map((el) => {
+          {dietsByName.map((diet) => {
             return (
-              <option value={el} key={el}>
-                {el}
+              <option value={diet} key={diet}>
+                {diet}
               </option>
             );
-          })} */}
+          })}
         </select>
       </div>
       <div>

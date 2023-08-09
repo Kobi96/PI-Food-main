@@ -4,6 +4,7 @@ import {
   POST_RECIPE,
   GET_RECIPE_BY_ID,
   GET_RECIPE_BY_NAME,
+  FILTER_BY_DIETS,
 } from "./types";
 
 const initialState = {
@@ -11,7 +12,6 @@ const initialState = {
   diets: [],
   recipeDetail: {},
 };
-
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case POST_RECIPE:
@@ -36,6 +36,8 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         diets: action.payload,
       };
+    case FILTER_BY_DIETS:
+      return { ...state, recipes: action.payload };
     default:
       return { ...state };
   }
