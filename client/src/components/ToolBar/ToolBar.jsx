@@ -1,41 +1,47 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getRecipes, getDiets, filterByDiets } from "../../redux/actions";
+import { getRecipes, filterByDiets } from "../../redux/actions";
 import "./ToolBar.module.css";
 
 const ToolBar = () => {
   const dispatch = useDispatch();
-  const [dietFilterState, setDietFilterState] = useState([]);
-  const [auxRecipesState, setAuxRecipesState] = useState([]);
 
   const recipes = useSelector((state) => state.recipes);
   const dietList = useSelector((state) => state.diets);
   const dietsByName = dietList.map((diet) => diet.name);
 
-  if (!auxRecipesState.length) setAuxRecipesState(recipes);
-  console.log(auxRecipesState);
+  const [originalRecipes, setOriginalRecipes] = useState([]);
+  const [hasExecuted, setHasExecuted] = useState(false);
+
+  useEffect(() => {
+    if (!hasExecuted) {
+      setTimeout(() => {
+        setOriginalRecipes(recipes);
+        setHasExecuted(true);
+      }, 1000);
+    }
+  }, [recipes, hasExecuted]);
 
   const dietChangeHandler = (event) => {
     const diet = event.target.value;
-    dispatch(getRecipes());
-    const filteredRecipes = recipes.filter((recipe) =>
+
+    console.log(diet);
+    if (diet === "allDiets") dispatch(getRecipes());
+
+    const filteredRecipes = originalRecipes.filter((recipe) =>
       recipe.diets.toLowerCase().includes(diet)
     );
-    setDietFilterState(filteredRecipes);
+    console.log(filteredRecipes);
+    dispatch(filterByDiets(filteredRecipes));
   };
-
-  useEffect(() => {
-    dispatch(filterByDiets(dietFilterState));
-  }, [dispatch, dietFilterState]);
 
   return (
     <div className="toolbar">
       <div className="orderContainer">
         <span>Ordenar por:</span>
         <select
-          /* onChange={(e) => handleChange(e)} */
-          defaultValue={"default"}
+          /*           onChange={(e) => handleChange(e)}
+           */ defaultValue={"default"}
           className="selectMain"
         >
           <option value="default">Ordenar por...</option>
@@ -61,7 +67,8 @@ const ToolBar = () => {
       <div>
         <span>Filtrar por Origen:</span>
         <select
-          /* onChange={(e) => handleChangeBdd(e)} */ className="selectMain"
+        /*           onChange={(e) => handleChangeBdd(e)} className="selectMain"
+         */
         >
           <option value="TODAS">Todas</option>
           {/* <option value="Bdd" disabled={!recipesBdd.length > 0} key="Bdd">
