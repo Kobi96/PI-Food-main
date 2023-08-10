@@ -4,23 +4,28 @@ import {
   POST_RECIPE,
   GET_RECIPE_BY_ID,
   GET_RECIPE_BY_NAME,
-  FILTER_ORDER,
+  SET_DIET,
+  SET_SOURCE,
+  SET_SORT,
+  SET_RECIPES_COPY,
 } from "./types";
 
 const initialState = {
   recipes: [],
+  recipesCopy: [],
   diets: [],
   recipeDetail: {},
+  filter: { diet: "allDiets", source: "allRecipes" },
+  sort: "notSorted",
 };
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case POST_RECIPE:
+    case GET_RECIPES:
       return {
         ...state,
         recipes: action.payload,
+        recipesCopy: action.payload,
       };
-    case GET_RECIPES:
-      return { ...state, recipes: action.payload };
     case GET_RECIPE_BY_ID:
       return {
         ...state,
@@ -29,15 +34,33 @@ const rootReducer = (state = initialState, action) => {
     case GET_RECIPE_BY_NAME:
       return {
         ...state,
-        recipes: action.payload,
+        recipesCopy: action.payload,
       };
     case GET_DIETS:
       return {
         ...state,
         diets: action.payload,
       };
-    case FILTER_ORDER:
-      return { ...state, recipes: action.payload };
+    case POST_RECIPE:
+      return {
+        ...state,
+        recipes: action.payload,
+      };
+    case SET_SORT:
+      return { ...state, sort: action.payload };
+    case SET_SOURCE:
+      return { ...state, filter: { ...state.filter, source: action.payload } };
+    case SET_DIET:
+      return {
+        ...state,
+        filter: { ...state.filter, diet: action.payload },
+      };
+    case SET_RECIPES_COPY:
+      return {
+        ...state,
+        recipesCopy: action.payload,
+      };
+
     default:
       return { ...state };
   }

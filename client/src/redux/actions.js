@@ -4,7 +4,10 @@ import {
   GET_RECIPE_BY_ID,
   GET_DIETS,
   POST_RECIPE,
-  FILTER_ORDER,
+  SET_DIET,
+  SET_SOURCE,
+  SET_SORT,
+  SET_RECIPES_COPY,
 } from "./types";
 import axios from "axios";
 
@@ -49,8 +52,17 @@ const postRecipe = (recipe) => {
   };
 };
 
-const filterOrder = (recipes) => {
-  return { type: FILTER_ORDER, payload: recipes };
+const setSource = (payload) => {
+  return { type: SET_SOURCE, payload };
+};
+const setDiet = (payload) => {
+  return { type: SET_DIET, payload };
+};
+const setSort = (payload) => {
+  return { type: SET_SORT, payload };
+};
+const setRecipesCopy = (payload) => {
+  return { type: SET_RECIPES_COPY, payload };
 };
 
 export {
@@ -59,5 +71,8 @@ export {
   getRecipeByName,
   getRecipeById,
   postRecipe,
-  filterOrder,
+  setDiet,
+  setSort,
+  setSource,
+  setRecipesCopy,
 };
