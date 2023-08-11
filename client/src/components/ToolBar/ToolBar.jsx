@@ -40,6 +40,12 @@ const ToolBar = () => {
         if (sort === "Z-a") {
           return a.name.toUpperCase() < b.name.toUpperCase() ? -1 : 1;
         }
+        if (sort === "H-L") {
+          return a.healthScore > b.healthScore ? -1 : 1; // Cambio aquí
+        }
+        if (sort === "L-H") {
+          return a.healthScore < b.healthScore ? -1 : 1;
+        }
         return 0;
       });
     console.log({ list, filters, sort });
