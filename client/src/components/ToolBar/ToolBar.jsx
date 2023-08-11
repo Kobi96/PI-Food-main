@@ -37,11 +37,7 @@ const ToolBar = () => {
           return a.name.toUpperCase() < b.name.toUpperCase() ? -1 : 1;
         }
         if (sort === "H-L") {
-<<<<<<< HEAD
-          return a.healthScore > b.healthScore ? -1 : 1; // Cambio aquí
-=======
           return a.healthScore > b.healthScore ? -1 : 1;
->>>>>>> 67e541855b775f24ca58ff1127fae44d010c7c92
         }
         if (sort === "L-H") {
           return a.healthScore < b.healthScore ? -1 : 1;
