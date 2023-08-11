@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setRecipesCopy,
   setSort,
   setSource,
   setDiet,
+  getRecipes,
+  getRecipeByName,
 } from "../../redux/actions";
 import "./ToolBar.module.css";
 
@@ -49,6 +51,22 @@ const ToolBar = () => {
     // eslint-disable-next-line
   }, [filters.source, filters.diet, sort]);
 
+  const [name, setName] = useState("");
+
+  useEffect(() => {
+    if (!name) {
+      dispatch(getRecipes());
+    }
+  }, [name, dispatch]);
+
+  const handleChange = (event) => {
+    setName(event.target.value);
+  };
+
+  const onSearch = () => {
+    dispatch(getRecipeByName(name));
+  };
+
   const sortRecipesHandler = (event) => {
     dispatch(setSort(event.target.value));
   };
@@ -92,6 +110,17 @@ const ToolBar = () => {
           <option value="apiRecipes">Recetas Originales</option>
           <option value="dbRecipes">Recetas Creadas por Vos!</option>
         </select>
+      </div>
+      <div>
+        <input
+          type="search"
+          placeholder="Recetas"
+          autoComplete="off"
+          onChange={handleChange}
+          value={name}
+        />
+
+        <button onClick={onSearch}>Buscar</button>
       </div>
     </div>
   );
