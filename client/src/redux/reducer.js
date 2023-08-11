@@ -3,7 +3,7 @@ import {
   GET_DIETS,
   POST_RECIPE,
   GET_RECIPE_BY_ID,
-  GET_RECIPE_BY_NAME,
+  SET_NAME,
   SET_DIET,
   SET_SOURCE,
   SET_SORT,
@@ -17,6 +17,7 @@ const initialState = {
   recipeDetail: {},
   filter: { diet: "allDiets", source: "allRecipes" },
   sort: "notSorted",
+  name: "",
 };
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -31,11 +32,6 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         recipeDetail: action.payload,
       };
-    case GET_RECIPE_BY_NAME:
-      return {
-        ...state,
-        recipesCopy: action.payload,
-      };
     case GET_DIETS:
       return {
         ...state,
@@ -45,6 +41,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         recipes: action.payload,
+      };
+    case SET_NAME:
+      return {
+        ...state,
+        name: action.payload,
       };
     case SET_SORT:
       return { ...state, sort: action.payload };

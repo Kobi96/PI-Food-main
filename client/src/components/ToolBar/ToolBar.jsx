@@ -6,19 +6,21 @@ import {
   setSource,
   setDiet,
   getRecipes,
-  getRecipeByName,
+  setGlobalName,
 } from "../../redux/actions";
 import "./ToolBar.module.css";
 
 const ToolBar = () => {
   const dispatch = useDispatch();
+  const dietList = useSelector((state) => state.diets);
+  const dietsByName = dietList.map((diet) => diet.name);
+  const [localName, setLocalName] = useState("");
 
+  //Lo que el useEffect va a observar y generar una nueva lista de recetas en caso que haya cambios
   const recipes = useSelector((state) => state.recipes);
   const filters = useSelector((state) => state.filter);
   const sort = useSelector((state) => state.sort);
-  const dietList = useSelector((state) => state.diets);
-  const dietsByName = dietList.map((diet) => diet.name);
-
+  const globalName = useSelector((state) => state.name);
   useEffect(() => {
     const list = recipes
       .filter((recipe) => {
@@ -30,6 +32,12 @@ const ToolBar = () => {
         if (filters.diet === "allDiets") return true;
         return recipe.diets.toLowerCase().includes(filters.diet);
       })
+      .filter((recipe) => {
+        if (!globalName) return true;
+        const query = globalName.toLowerCase();
+        return recipe.name.toLowerCase().includes(query);
+      })
+
       .sort((a, b) => {
         if (sort === "Z-a") {
           return a.name.toUpperCase() > b.name.toUpperCase() ? -1 : 1;
@@ -46,43 +54,34 @@ const ToolBar = () => {
         }
         return 0;
       });
-    console.log({ list, filters, sort });
+    console.log({ list, filters, sort, globalName });
     dispatch(setRecipesCopy(list));
     // eslint-disable-next-line
-  }, [filters.source, filters.diet, sort]);
+  }, [filters.source, filters.diet, sort, globalName]);
 
-  const [name, setName] = useState("");
-
-  useEffect(() => {
-    if (!name) {
-      dispatch(getRecipes());
-    }
-  }, [name, dispatch]);
-
-  const handleChange = (event) => {
-    setName(event.target.value);
-  };
-
-  const onSearch = () => {
-    dispatch(getRecipeByName(name));
-  };
-
-  const sortRecipesHandler = (event) => {
+  //Funciones manejadoras para cada filtro y ordenamiento
+  const setSortRecipesHandler = (event) => {
     dispatch(setSort(event.target.value));
   };
-
-  const filterBySourceHandler = (event) => {
+  const setFilterBySourceHandler = (event) => {
     dispatch(setSource(event.target.value));
   };
-  const filterByDietHandler = (event) => {
+  const setFilterByDietHandler = (event) => {
     dispatch(setDiet(event.target.value));
+  };
+  const setLocalNameHandler = (event) => {
+    if (!event.target.value) dispatch(setGlobalName(""));
+    setLocalName(event.target.value);
+  };
+  const onSearch = () => {
+    dispatch(setGlobalName(localName));
   };
 
   return (
     <div className="toolbar">
       <div className="orderContainer">
         <span>Ordenar por:</span>
-        <select onChange={sortRecipesHandler} className="selectMain">
+        <select onChange={setSortRecipesHandler} className="selectMain">
           <option value="notSorted">Ordenar por...</option>
           <option value="A-z">A-z</option>
           <option value="Z-a">Z-a</option>
@@ -92,7 +91,7 @@ const ToolBar = () => {
       </div>
       <div className="filterContainer">
         <span>Filtrar dietas:</span>
-        <select onChange={filterByDietHandler} className="selectMain">
+        <select onChange={setFilterByDietHandler} className="selectMain">
           <option value="allDiets">Todas las dietas</option>
           {dietsByName.map((diet, index) => {
             return (
@@ -105,7 +104,7 @@ const ToolBar = () => {
       </div>
       <div>
         <span>Filtrar por Origen:</span>
-        <select onChange={filterBySourceHandler} className="selectMain">
+        <select onChange={setFilterBySourceHandler} className="selectMain">
           <option value="allRecipes">Todas</option>
           <option value="apiRecipes">Recetas Originales</option>
           <option value="dbRecipes">Recetas Creadas por Vos!</option>
@@ -116,8 +115,8 @@ const ToolBar = () => {
           type="search"
           placeholder="Recetas"
           autoComplete="off"
-          onChange={handleChange}
-          value={name}
+          onChange={setLocalNameHandler}
+          value={localName}
         />
 
         <button onClick={onSearch}>Buscar</button>

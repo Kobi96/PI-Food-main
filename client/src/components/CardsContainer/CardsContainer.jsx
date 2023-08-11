@@ -6,8 +6,8 @@ const CardsContainer = () => {
   const recipes = useSelector((state) => state.recipesCopy);
   return (
     <div className={style.container}>
-      {recipes.map((recipe) => {
-        return (
+      {recipes.length > 0 ? (
+        recipes.map((recipe) => (
           <Card
             key={recipe.id}
             id={recipe.id}
@@ -19,8 +19,10 @@ const CardsContainer = () => {
             created={recipe.created}
             diets={recipe.diets}
           />
-        );
-      })}
+        ))
+      ) : (
+        <h1>No existen recetas con estos parámetros</h1>
+      )}
     </div>
   );
 };

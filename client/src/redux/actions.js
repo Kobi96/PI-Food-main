@@ -1,9 +1,9 @@
 import {
   GET_RECIPES,
-  GET_RECIPE_BY_NAME,
   GET_RECIPE_BY_ID,
   GET_DIETS,
   POST_RECIPE,
+  SET_NAME,
   SET_DIET,
   SET_SOURCE,
   SET_SORT,
@@ -26,15 +26,6 @@ const getDiets = () => {
     dispatch({ type: GET_DIETS, payload: diets });
   };
 };
-const getRecipeByName = (name) => {
-  return async function (dispatch) {
-    const apiData = await axios.get(
-      `http://localhost:3001/food/recipes?name=${name}`
-    );
-    const recipe = apiData.data;
-    dispatch({ type: GET_RECIPE_BY_NAME, payload: recipe });
-  };
-};
 const getRecipeById = (id) => {
   return async function (dispatch) {
     const apiData = await axios.get(`http://localhost:3001/food/recipes/${id}`);
@@ -52,6 +43,9 @@ const postRecipe = (recipe) => {
   };
 };
 
+const setGlobalName = (payload) => {
+  return { type: SET_NAME, payload };
+};
 const setSource = (payload) => {
   return { type: SET_SOURCE, payload };
 };
@@ -68,9 +62,9 @@ const setRecipesCopy = (payload) => {
 export {
   getRecipes,
   getDiets,
-  getRecipeByName,
   getRecipeById,
   postRecipe,
+  setGlobalName,
   setDiet,
   setSort,
   setSource,
