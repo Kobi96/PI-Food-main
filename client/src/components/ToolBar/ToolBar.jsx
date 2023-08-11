@@ -1,10 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getRecipes,
-  sort,
-  filterByDiet,
-  filterBySource,
   setRecipesCopy,
   setSort,
   setSource,
@@ -33,15 +29,19 @@ const ToolBar = () => {
         return recipe.diets.toLowerCase().includes(filters.diet);
       })
       .sort((a, b) => {
-        if (sort === "A-z") {
+        if (sort === "Z-a") {
           return a.name.toUpperCase() > b.name.toUpperCase() ? -1 : 1;
         }
 
-        if (sort === "Z-a") {
+        if (sort === "A-z") {
           return a.name.toUpperCase() < b.name.toUpperCase() ? -1 : 1;
         }
         if (sort === "H-L") {
+<<<<<<< HEAD
           return a.healthScore > b.healthScore ? -1 : 1; // Cambio aquí
+=======
+          return a.healthScore > b.healthScore ? -1 : 1;
+>>>>>>> 67e541855b775f24ca58ff1127fae44d010c7c92
         }
         if (sort === "L-H") {
           return a.healthScore < b.healthScore ? -1 : 1;
@@ -50,82 +50,11 @@ const ToolBar = () => {
       });
     console.log({ list, filters, sort });
     dispatch(setRecipesCopy(list));
+    // eslint-disable-next-line
   }, [filters.source, filters.diet, sort]);
-
-  /*  const [originalRecipes, setOriginalRecipes] = useState([]);
-  const [hasExecuted, setHasExecuted] = useState(false); */
-
-  /*  useEffect(() => {
-    if (!hasExecuted) {
-      setTimeout(() => {
-        setOriginalRecipes(recipes);
-        setHasExecuted(true);
-      }, 1500);
-    }
-  }, [recipes, hasExecuted]); */
-
-  /*  const dietChangeHandler = (event) => {
-    const diet = event.target.value;
-
-    if (diet === "allDiets") return dispatch(getRecipes());
-
-    const filteredRecipesByDiet = originalRecipes.filter((recipe) =>
-      recipe.diets.toLowerCase().includes(diet)
-    );
-    dispatch(filterOrder(filteredRecipesByDiet));
-  };
-
-  const originChangeHandler = (event) => {
-    const origin = event.target.value;
-
-    if (origin === "allRecipes") return dispatch(getRecipes());
-
-    let filteredRecipesByOrigin;
-
-    if (origin === "apiRecipes") {
-      filteredRecipesByOrigin = originalRecipes.filter(
-        (recipe) => recipe.created === false
-      );
-    } else if (origin === "dbbRecipes") {
-      filteredRecipesByOrigin =
-    }
-
-    dispatch(filterOrder(filteredRecipesByOrigin));
-  };
-
-  const orderChangeHandler = (event) => {
-    const order = event.target.value;
-
-    if (order === "default") return dispatch(getRecipes());
-
-    let sortedRecipes;
-
-    if (order === "A-z") {
-      sortedRecipes = [...originalRecipes].sort((a, b) =>
-        a.name.localeCompare(b.name)
-      );
-    } else if (order === "Z-a") {
-      sortedRecipes = [...originalRecipes].sort((a, b) =>
-        b.name.localeCompare(a.name)
-      );
-    } else if (order === "L-H") {
-      sortedRecipes = [...originalRecipes].sort(
-        (a, b) => a.healthScore - b.healthScore
-      );
-    } else if (order === "H-L") {
-      sortedRecipes = [...originalRecipes].sort(
-        (a, b) => b.healthScore - a.healthScore
-      );
-    }
-
-    dispatch(filterOrder(sortedRecipes));
-  }; */
-
-  const [order, setOrder] = useState("");
 
   const sortRecipesHandler = (event) => {
     dispatch(setSort(event.target.value));
-    setOrder(`Ordered ${event.target.value}`);
   };
 
   const filterBySourceHandler = (event) => {
