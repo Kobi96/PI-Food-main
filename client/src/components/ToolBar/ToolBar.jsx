@@ -5,8 +5,8 @@ import {
   setSort,
   setSource,
   setDiet,
-  getRecipes,
   setGlobalName,
+  getRecipesByName,
 } from "../../redux/actions";
 import "./ToolBar.module.css";
 
@@ -20,7 +20,15 @@ const ToolBar = () => {
   const recipes = useSelector((state) => state.recipes);
   const filters = useSelector((state) => state.filter);
   const sort = useSelector((state) => state.sort);
+  const recipesByName = useSelector((state) => state.recipesByName);
   const globalName = useSelector((state) => state.name);
+
+  useEffect(() => {
+    if (!localName) dispatch(setGlobalName(""));
+    dispatch(getRecipesByName(localName));
+    // eslint-disable-next-line
+  }, [localName]);
+
   useEffect(() => {
     const list = recipes
       .filter((recipe) => {
@@ -34,8 +42,11 @@ const ToolBar = () => {
       })
       .filter((recipe) => {
         if (!globalName) return true;
-        const query = globalName.toLowerCase();
-        return recipe.name.toLowerCase().includes(query);
+        return recipesByName.some(
+          (recipe2) =>
+            recipe2.name.toLowerCase().includes(globalName.toLowerCase()) &&
+            recipe.name.toLowerCase().includes(globalName.toLowerCase())
+        );
       })
 
       .sort((a, b) => {
@@ -54,10 +65,10 @@ const ToolBar = () => {
         }
         return 0;
       });
-    console.log({ list, filters, sort, globalName });
+    console.log({ list, filters, sort, globalName, recipesByName });
     dispatch(setRecipesCopy(list));
     // eslint-disable-next-line
-  }, [filters.source, filters.diet, sort, globalName]);
+  }, [filters.source, filters.diet, sort, globalName, recipesByName]);
 
   //Funciones manejadoras para cada filtro y ordenamiento
   const setSortRecipesHandler = (event) => {
@@ -70,7 +81,6 @@ const ToolBar = () => {
     dispatch(setDiet(event.target.value));
   };
   const setLocalNameHandler = (event) => {
-    if (!event.target.value) dispatch(setGlobalName(""));
     setLocalName(event.target.value);
   };
   const onSearch = () => {

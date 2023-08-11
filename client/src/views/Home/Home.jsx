@@ -8,6 +8,7 @@ const Home = () => {
   useEffect(() => {
     dispatch(getRecipes());
     dispatch(getDiets());
+
     // eslint-disable-next-line
   }, []);
   return (

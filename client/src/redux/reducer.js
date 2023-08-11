@@ -8,12 +8,14 @@ import {
   SET_SOURCE,
   SET_SORT,
   SET_RECIPES_COPY,
+  GET_RECIPES_BY_NAME,
 } from "./types";
 
 const initialState = {
   recipes: [],
   recipesCopy: [],
   diets: [],
+  recipesByName: [],
   recipeDetail: {},
   filter: { diet: "allDiets", source: "allRecipes" },
   sort: "notSorted",
@@ -41,6 +43,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         recipes: action.payload,
+      };
+    case GET_RECIPES_BY_NAME:
+      return {
+        ...state,
+        recipesByName: action.payload,
       };
     case SET_NAME:
       return {

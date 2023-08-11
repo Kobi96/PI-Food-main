@@ -8,6 +8,7 @@ import {
   SET_SOURCE,
   SET_SORT,
   SET_RECIPES_COPY,
+  GET_RECIPES_BY_NAME,
 } from "./types";
 import axios from "axios";
 
@@ -43,6 +44,25 @@ const postRecipe = (recipe) => {
   };
 };
 
+const getRecipesByName = (name) => {
+  return async function (dispatch) {
+    try {
+      const apiData = await axios.get(
+        `http://localhost:3001/food/recipes?name=${name}`
+      );
+
+      if (apiData.status === 400) {
+        dispatch({ type: GET_RECIPES_BY_NAME, payload: [] });
+      } else {
+        const recipes = apiData.data;
+        dispatch({ type: GET_RECIPES_BY_NAME, payload: recipes });
+      }
+    } catch (error) {
+      console.error("Error fetching API data:", error);
+      dispatch({ type: GET_RECIPES_BY_NAME, payload: [] });
+    }
+  };
+};
 const setGlobalName = (payload) => {
   return { type: SET_NAME, payload };
 };
@@ -64,6 +84,7 @@ export {
   getDiets,
   getRecipeById,
   postRecipe,
+  getRecipesByName,
   setGlobalName,
   setDiet,
   setSort,
