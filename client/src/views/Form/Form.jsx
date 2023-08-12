@@ -1,11 +1,13 @@
 import style from "./Form.module.css";
 import { useState } from "react";
 import { postRecipe } from "../../redux/actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import validator from "./validation";
 
 const Form = () => {
   const dispatch = useDispatch();
+
+  const dietList = useSelector((state) => state.diets);
 
   // Estados locales
   const [form, setForm] = useState({
@@ -127,76 +129,19 @@ const Form = () => {
         {errors.image && <p className={style.errors}>{errors.image}</p>}
         <label>Tipos de dieta:</label>
         {errors.diets && <p className={style.errors}>{errors.diets}</p>}
-        <input
-          type="checkbox"
-          id={1}
-          value={form.diets}
-          onChange={dietsHandler}
-        />{" "}
-        Gluten Free
-        <input
-          type="checkbox"
-          id={2}
-          value={form.diets}
-          onChange={dietsHandler}
-        />{" "}
-        Dairy Free
-        <input
-          type="checkbox"
-          id={3}
-          value={form.diets}
-          onChange={dietsHandler}
-        />{" "}
-        Lacto Ovo Vegetarian
-        <input
-          type="checkbox"
-          id={4}
-          value={form.diets}
-          onChange={dietsHandler}
-        />{" "}
-        Vegan
-        <input
-          type="checkbox"
-          id={5}
-          value={form.diets}
-          onChange={dietsHandler}
-        />{" "}
-        Paleolithic
-        <input
-          type="checkbox"
-          id={6}
-          value={form.diets}
-          onChange={dietsHandler}
-        />{" "}
-        Primal
-        <input
-          type="checkbox"
-          id={7}
-          value={form.diets}
-          onChange={dietsHandler}
-        />{" "}
-        Whole 30
-        <input
-          type="checkbox"
-          id={8}
-          value={form.diets}
-          onChange={dietsHandler}
-        />{" "}
-        Pescatarian
-        <input
-          type="checkbox"
-          id={9}
-          value={form.diets}
-          onChange={dietsHandler}
-        />{" "}
-        Ketogenic
-        <input
-          type="checkbox"
-          id={10}
-          value={form.diets}
-          onChange={dietsHandler}
-        />{" "}
-        Fodmap Friendly
+        {dietList.map((diet, index) => {
+          return (
+            <div key={index}>
+              <label htmlFor={diet.id}>{diet.name}</label>
+              <input
+                type="checkbox"
+                id={diet.id}
+                value={form.diets}
+                onChange={dietsHandler}
+              />
+            </div>
+          );
+        })}
         <button type="submit">Crear Receta</button>
       </form>
     </div>
