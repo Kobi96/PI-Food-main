@@ -4,7 +4,13 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
+import { getRecipes, getDiets } from "./redux/actions";
 import store from "./redux/store";
+
+store.dispatch(getRecipes());
+store.dispatch(getDiets());
+
+// eslint-disable-next-line
 
 ReactDOM.render(
   <Provider store={store}>
