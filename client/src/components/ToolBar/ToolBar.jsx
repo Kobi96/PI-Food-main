@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setRecipesCopy,
   setSort,
   setSource,
   setDiet,
@@ -16,59 +15,11 @@ const ToolBar = () => {
   const dietsByName = dietList.map((diet) => diet.name);
   const [localName, setLocalName] = useState("");
 
-  //Lo que el useEffect va a observar y generar una nueva lista de recetas en caso que haya cambios
-  const recipes = useSelector((state) => state.recipes);
-  const filters = useSelector((state) => state.filter);
-  const sort = useSelector((state) => state.sort);
-  const recipesByName = useSelector((state) => state.recipesByName);
-  const globalName = useSelector((state) => state.name);
-
   useEffect(() => {
     if (!localName) dispatch(setGlobalName(""));
     dispatch(getRecipesByName(localName));
     // eslint-disable-next-line
   }, [localName]);
-
-  useEffect(() => {
-    const list = recipes
-      .filter((recipe) => {
-        if (filters.source === "apiRecipes") return !recipe.created;
-        if (filters.source === "dbRecipes") return recipe.created;
-        return true;
-      })
-      .filter((recipe) => {
-        if (filters.diet === "allDiets") return true;
-        return recipe.diets.toLowerCase().includes(filters.diet);
-      })
-      .filter((recipe) => {
-        if (!globalName) return true;
-        return recipesByName.some(
-          (recipe2) =>
-            recipe2.name.toLowerCase().includes(globalName.toLowerCase()) &&
-            recipe.name.toLowerCase().includes(globalName.toLowerCase())
-        );
-      })
-
-      .sort((a, b) => {
-        if (sort === "Z-a") {
-          return a.name.toUpperCase() > b.name.toUpperCase() ? -1 : 1;
-        }
-
-        if (sort === "A-z") {
-          return a.name.toUpperCase() < b.name.toUpperCase() ? -1 : 1;
-        }
-        if (sort === "H-L") {
-          return a.healthScore > b.healthScore ? -1 : 1;
-        }
-        if (sort === "L-H") {
-          return a.healthScore < b.healthScore ? -1 : 1;
-        }
-        return 0;
-      });
-    console.log({ list, filters, sort, globalName, recipesByName });
-    dispatch(setRecipesCopy(list));
-    // eslint-disable-next-line
-  }, [filters.source, filters.diet, sort, globalName, recipesByName]);
 
   //Funciones manejadoras para cada filtro y ordenamiento
   const setSortRecipesHandler = (event) => {

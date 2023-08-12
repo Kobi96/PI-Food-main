@@ -1,13 +1,11 @@
 import Card from "../Card/Card";
 import style from "./CardsContainer.module.css";
-import { useSelector } from "react-redux";
 
-const CardsContainer = () => {
-  const recipes = useSelector((state) => state.recipesCopy);
+const CardsContainer = ({ currentRecipes }) => {
   return (
     <div className={style.container}>
-      {recipes.length > 0 ? (
-        recipes.map((recipe) => (
+      {currentRecipes.length > 0 ? (
+        currentRecipes.map((recipe) => (
           <Card
             key={recipe.id}
             id={recipe.id}
