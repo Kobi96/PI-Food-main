@@ -27,7 +27,20 @@ const Form = () => {
     const value = event.target.value;
 
     setForm({ ...form, [property]: value });
-    setErrors({});
+
+    const validationErrors = validator({ ...form, [property]: value });
+
+    if (validationErrors[property]) {
+      setErrors({
+        ...errors,
+        [property]: validationErrors[property],
+      });
+    } else {
+      setErrors({
+        ...errors,
+        [property]: "",
+      });
+    }
   };
 
   const dietsHandler = (event) => {
@@ -48,14 +61,19 @@ const Form = () => {
 
     if (finalCount % 2 === 0) {
       setForm({ ...form, diets: [...form.diets, Number(id)] });
-      setErrors({});
     } else if (finalCount % 2 === 1) {
       const filteredDiets = form.diets.filter(
         (dietId) => dietId !== Number(id)
       );
       setForm({ ...form, diets: filteredDiets });
-      if (form.diets.length) setErrors({});
+      if (form.diets.length);
     }
+
+    const validationErrors = validator({ ...form, diets: form.diets });
+    setErrors({
+      ...errors,
+      diets: form.diets.length === 0 ? [] : validationErrors.diets || "",
+    });
   };
 
   const submitHandler = (event) => {
