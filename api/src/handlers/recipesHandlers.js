@@ -42,6 +42,16 @@ const getRecipesHandler = async (req, res) => {
 const postRecipeHandler = async (req, res) => {
   try {
     const { name, image, summary, healthScore, instructions, diets } = req.body;
+    if (
+      !name ||
+      !image ||
+      !summary ||
+      !healthScore ||
+      !instructions ||
+      !diets
+    ) {
+      throw new Error("Faltan datos");
+    }
 
     const newRecipe = await createRecipe(
       name,
@@ -51,8 +61,12 @@ const postRecipeHandler = async (req, res) => {
       instructions,
       diets
     );
-    //      throw new Error (`Faltan datos`);
-    res.status(201).json(newRecipe);
+
+    if (newRecipe === `Ya existe la receta con el nombre ${name}`) {
+      throw new Error(`Ya existe la receta con el nombre ${name}`);
+    } else {
+      res.status(201).json(newRecipe);
+    }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

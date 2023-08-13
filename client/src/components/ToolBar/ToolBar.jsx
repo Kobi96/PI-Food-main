@@ -16,8 +16,10 @@ const ToolBar = () => {
   const [localName, setLocalName] = useState("");
 
   useEffect(() => {
-    if (!localName) dispatch(setGlobalName(""));
-    dispatch(getRecipesByName(localName));
+    if (!localName) {
+      dispatch(getRecipesByName(localName));
+      dispatch(setGlobalName(localName));
+    }
     // eslint-disable-next-line
   }, [localName]);
 
@@ -35,6 +37,7 @@ const ToolBar = () => {
     setLocalName(event.target.value);
   };
   const onSearch = () => {
+    dispatch(getRecipesByName(localName));
     dispatch(setGlobalName(localName));
   };
 

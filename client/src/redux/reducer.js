@@ -19,7 +19,7 @@ const initialState = {
   recipeDetail: {},
   filter: { diet: "allDiets", source: "allRecipes" },
   sort: "notSorted",
-  name: "",
+  name: null,
 };
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -42,7 +42,7 @@ const rootReducer = (state = initialState, action) => {
     case POST_RECIPE:
       return {
         ...state,
-        recipes: action.payload,
+        recipes: [...state.recipes, action.payload],
       };
     case GET_RECIPES_BY_NAME:
       return {

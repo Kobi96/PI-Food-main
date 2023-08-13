@@ -37,16 +37,31 @@ const getRecipeById = (id) => {
 };
 const postRecipe = (recipe) => {
   return async (dispatch) => {
-    const { data } = await axios
-      .post("http://localhost:3001/food/recipes", recipe)
-      .then(alert("Receta Creada"));
-    dispatch({ type: POST_RECIPE, payload: data });
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/food/recipes",
+        recipe
+      );
+
+      if (response.status === 201) {
+        dispatch({ type: POST_RECIPE, payload: response.data });
+        alert("Receta Creada");
+      }
+    } catch (error) {
+      const errorMessage =
+        error.response && error.response.data.error
+          ? error.response.data.error
+          : "Error al crear la receta";
+
+      alert(errorMessage);
+    }
   };
 };
 
 const getRecipesByName = (name) => {
   return async function (dispatch) {
     try {
+      console.log(name);
       const apiData = await axios.get(
         `http://localhost:3001/food/recipes?name=${name}`
       );
@@ -55,7 +70,9 @@ const getRecipesByName = (name) => {
         dispatch({ type: GET_RECIPES_BY_NAME, payload: [] });
       } else {
         const recipes = apiData.data;
-        dispatch({ type: GET_RECIPES_BY_NAME, payload: recipes });
+        recipes.length
+          ? dispatch({ type: GET_RECIPES_BY_NAME, payload: recipes })
+          : dispatch({ type: GET_RECIPES_BY_NAME, payload: [] });
       }
     } catch (error) {
       console.error("Error fetching API data:", error);

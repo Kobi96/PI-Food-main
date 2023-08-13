@@ -8,12 +8,13 @@ const Home = () => {
   const dispatch = useDispatch();
 
   const globalRecipes = useSelector((state) => state.recipes);
+  const globalRecipesCopy = useSelector((state) => state.recipesCopy);
   const filters = useSelector((state) => state.filter);
   const sort = useSelector((state) => state.sort);
   const recipesByName = useSelector((state) => state.recipesByName);
   const name = useSelector((state) => state.name);
 
-  const [recipes, setRecipes] = useState(globalRecipes);
+  const [recipes, setRecipes] = useState(globalRecipesCopy);
   const [currentPage, setCurrentPage] = useState(1);
   const [recipesPerPage] = useState(9);
 

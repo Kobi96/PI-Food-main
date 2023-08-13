@@ -2,7 +2,7 @@ require("dotenv").config();
 const { Op } = require("sequelize");
 const { Recipe, Diet } = require("../db");
 const getAllDiets = require("./dietsController");
-const axios = require("axios");
+/* const axios = require("axios"); */
 const { API_KEY } = process.env;
 const recipes = require("../recipes.json");
 const { cleanArray, cleanDiet } = require("../utils");
@@ -91,7 +91,7 @@ const getAllRecipes = async () => {
   const dbbRecipes = cleanDiet(dbbRecipesRaw);
   const apiRecipesRaw = recipes.results; /* (
     await axios.get(
-      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=100&addRecipeInformation=true`
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=40&addRecipeInformation=true`
     )
   ).data.results; */
 
@@ -119,7 +119,7 @@ const getRecipesByName = async (name) => {
 
   const apiRecipesRaw = recipes.results; /* (
     await axios.get(
-      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=100&addRecipeInformation=true`
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=40&addRecipeInformation=true`
     )
   ).data.results; */
 
