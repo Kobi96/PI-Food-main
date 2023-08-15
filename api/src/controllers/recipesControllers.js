@@ -91,7 +91,7 @@ const getAllRecipes = async () => {
   const dbbRecipes = cleanDiet(dbbRecipesRaw);
   const apiRecipesRaw = recipes.results; /* (
     await axios.get(
-      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=40&addRecipeInformation=true`
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=10&addRecipeInformation=true`
     )
   ).data.results; */
 
@@ -119,7 +119,7 @@ const getRecipesByName = async (name) => {
 
   const apiRecipesRaw = recipes.results; /* (
     await axios.get(
-      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=40&addRecipeInformation=true`
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=10&addRecipeInformation=true`
     )
   ).data.results; */
 
