@@ -31,7 +31,6 @@ const getRecipeById = (id) => {
   return async function (dispatch) {
     const apiData = await axios.get(`http://localhost:3001/food/recipes/${id}`);
     const recipe = apiData.data;
-    console.log(recipe);
     dispatch({ type: GET_RECIPE_BY_ID, payload: recipe });
   };
 };
@@ -61,7 +60,6 @@ const postRecipe = (recipe) => {
 const getRecipesByName = (name) => {
   return async function (dispatch) {
     try {
-      console.log(name);
       const apiData = await axios.get(
         `http://localhost:3001/food/recipes?name=${name}`
       );

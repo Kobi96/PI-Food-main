@@ -41,8 +41,6 @@ const ToolBar = () => {
     dispatch(setGlobalName(localName));
   };
 
-  console.log(dietsByName);
-
   return (
     <div className={style.container}>
       <div>
