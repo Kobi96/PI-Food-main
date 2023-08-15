@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-around;
   background-color: rgba(190, 105, 24, 0.8);
-  height: 64px;
+  height: 80px; /* Ajustar la altura para dar más espacio */
   align-items: center;
   font-family: Helvetica, sans-serif;
   width: 100%;

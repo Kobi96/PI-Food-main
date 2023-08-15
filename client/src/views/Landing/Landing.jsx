@@ -1,8 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import styles from "./Landing.module.css"; // Importar el archivo CSS Module
+import styles from "./Landing.module.css";
+import { useSelector } from "react-redux";
 
 const Landing = () => {
+  const globalRecipes = useSelector((state) => state.recipes);
+  const dietList = useSelector((state) => state.diets);
+  const dietsByName = dietList.map((diet) => diet.name);
+
+  console.log("Recetas:", globalRecipes);
+  console.log("Dietas:", dietsByName);
   return (
     <div className={styles.backgroundImage}>
       <div className={styles.welcomeSign}>

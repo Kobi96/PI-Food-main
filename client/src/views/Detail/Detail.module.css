@@ -2,13 +2,14 @@
   background-color: rgba(255, 240, 151, 0.3);
   border-radius: 16px;
   padding: 20px;
-  margin: 20px;
+  margin: 0; /* Eliminar el margen superior */
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   font-family: "Helvetica, sans-serif";
   color: #b74a00;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  min-height: 100vh; /* Ajustar el mínimo de altura para cubrir la pantalla */
 }
 
 .nameImage {
@@ -23,7 +24,6 @@
   flex: 1;
   margin-top: 16px;
   background-color: #ff5722;
-
   color: white;
   border-radius: 16px;
   padding: 20px;
@@ -38,10 +38,6 @@
   font-size: 1.2rem;
   margin-bottom: 16px;
   text-align: justify;
-}
-
-.info {
-  margin-top: 16px;
 }
 
 .subtitle {
@@ -62,6 +58,13 @@
 .id {
   font-size: 1rem;
   margin-top: 16px;
+  background-color: #f2f2f2;
+  border-radius: 16px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  color: black;
+  display: inline-block;
+  margin-right: 8px;
 }
 
 .image {
@@ -70,4 +73,21 @@
   height: auto;
   border-radius: 16px;
   margin-top: 16px;
+}
+
+.button {
+  background-color: #b74a00;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-family: "Helvetica, sans-serif";
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  margin-top: 16px;
+}
+
+.button:hover {
+  background-color: #ff5722; /* Color de fondo naranja en hover */
 }

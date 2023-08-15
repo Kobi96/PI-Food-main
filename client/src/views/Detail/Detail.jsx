@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getRecipeById } from "../../redux/actions";
@@ -15,6 +15,32 @@ const Detail = () => {
     // eslint-disable-next-line
   }, []);
   console.log(recipe.diets);
+
+  const [showId, setShowId] = useState(false); // Estado para controlar la visibilidad del ID
+
+  const toggleIdVisibility = () => {
+    setShowId(!showId);
+  };
+
+  const renderCreatedButton = () => {
+    if (recipe.created) {
+      return (
+        <button
+          className={`${style.button} ${style.createdButton}`}
+          onClick={toggleIdVisibility}
+        >
+          Receta creada por Vos!
+        </button>
+      );
+    } else {
+      return (
+        <button className={style.button} onClick={toggleIdVisibility}>
+          Receta Original
+        </button>
+      );
+    }
+  };
+
   return (
     <div className={style.container}>
       <div className={style.nameImage}>
@@ -32,7 +58,10 @@ const Detail = () => {
         <p className={style.instructions}> {recipe?.instructions}</p>
         <h2 className={style.subtitle}>Dietas:</h2>
         <p className={style.diets}>{recipe.diets}</p>
-        <h4 className={style.id}>ID: {recipe?.id}</h4>{" "}
+        {renderCreatedButton()}
+        {showId && (
+          <h4 className={`${style.id} ${style.showId}`}>ID: {recipe?.id}</h4>
+        )}
       </div>
     </div>
   );

@@ -90,14 +90,16 @@ const Form = () => {
   };
 
   return (
-    <div>
+    <div className={style.formWrapper}>
       <form
         className={style.form_container}
         onSubmit={submitHandler}
         noValidate
       >
+        <h1 className={style.form_title}>Crear Nueva Receta</h1>
         <label>Nombre:</label>
         <input
+          className={style.input}
           type="text"
           name="name"
           value={form.name}
@@ -105,18 +107,22 @@ const Form = () => {
           required
         />
         {errors.name && <p className={style.errors}>{errors.name}</p>}
+        <br />
         <label for="resumen">Resumen del plato:</label>
         <textarea
+          className={style.textarea}
           name="summary"
           value={form.summary}
           onChange={changeHandler}
           required
         ></textarea>
         {errors.summary && <p className={style.errors}>{errors.summary}</p>}
+        <br />
         <label for="healthScore">
           Nivel de comida saludable (del 1 al 100):
         </label>
         <input
+          className={style.input}
           type="number"
           name="healthScore"
           value={form.healthScore}
@@ -126,8 +132,10 @@ const Form = () => {
         {errors.healthScore && (
           <p className={style.errors}>{errors.healthScore}</p>
         )}
+        <br />
         <label for="pasos">Paso a paso:</label>
         <textarea
+          className={style.textarea}
           name="instructions"
           value={form.instructions}
           onChange={changeHandler}
@@ -136,8 +144,10 @@ const Form = () => {
         {errors.instructions && (
           <p className={style.errors}>{errors.instructions}</p>
         )}
+        <br />
         <label for="imagen">Imagen:</label>
         <input
+          className={style.input}
           type="text"
           name="image"
           value={form.image}
@@ -145,8 +155,10 @@ const Form = () => {
           onChange={changeHandler}
         ></input>
         {errors.image && <p className={style.errors}>{errors.image}</p>}
+        <br />
         <label>Tipos de dieta:</label>
         {errors.diets && <p className={style.errors}>{errors.diets}</p>}
+        <br />
         {dietList.map((diet, index) => {
           return (
             <div key={index}>
@@ -160,7 +172,9 @@ const Form = () => {
             </div>
           );
         })}
-        <button type="submit">Crear Receta</button>
+        <button className={style.submit_button} type="submit">
+          Crear Receta
+        </button>
       </form>
     </div>
   );

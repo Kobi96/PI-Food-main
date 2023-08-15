@@ -1,5 +1,7 @@
+import React from "react";
 import Card from "../Card/Card";
 import style from "./CardsContainer.module.css";
+import frustratedChefImage from "../../assets/chef-frustrado.jpg";
 
 const CardsContainer = ({ currentRecipes }) => {
   return (
@@ -19,7 +21,16 @@ const CardsContainer = ({ currentRecipes }) => {
           />
         ))
       ) : (
-        <h1>No existen recetas con estos parámetros</h1>
+        <div className={style.noRecipes}>
+          <h1>No existen recetas con estos parámetros</h1>
+          <div className={style.imageContainer}>
+            <img
+              src={frustratedChefImage}
+              alt="No existen recetas"
+              className={style.frustratedImage}
+            />
+          </div>
+        </div>
       )}
     </div>
   );

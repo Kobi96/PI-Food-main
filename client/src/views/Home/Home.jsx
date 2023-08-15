@@ -69,7 +69,7 @@ const Home = () => {
 
   return (
     <div className={style.container}>
-      <h1>Qué te apetece hoy?</h1>
+      <h1 className={style.homeTitle}>Qué te apetece hoy?</h1>
       <Pagination
         recipesPerPage={recipesPerPage}
         totalRecipes={recipes.length}

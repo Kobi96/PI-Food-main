@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "cook";
+  src: url("../../assets/Cookie-Regular.ttf");
+}
+
 .backgroundImage {
   position: absolute;
   text-align: center;
@@ -10,33 +15,25 @@
 }
 
 .welcomeSign {
-  background-color: rgba(255, 240, 151, 0.9); /* Fondo amarillo translúcido */
+  background-color: rgba(255, 240, 151, 0.9);
   padding: 20px;
   border-radius: 10px;
   margin: 20px auto 0;
   max-width: 300px;
-  position: relative; /* Agregar posición relativa */
-  transition: box-shadow 0.3s ease-in-out; /* Transición de la sombra */
-}
-
-.welcomeSign {
-  background-color: rgba(255, 240, 151, 0.9); /* Fondo amarillo translúcido */
-  padding: 20px;
-  border-radius: 10px;
-  margin: 20px auto 0;
-  max-width: 300px;
-  position: relative; /* Agregar posición relativa */
-  transition: box-shadow 1s ease-in-out; /* Transición de la sombra aún más lenta */
+  position: relative;
+  transition: box-shadow 1s ease-in-out;
 }
 
 .welcomeSign:hover {
-  box-shadow: 0px 10px 30px rgba(255, 193, 7, 0.9); /* Sombra cálida más fuerte en hover */
+  box-shadow: 0px 10px 30px rgba(255, 193, 7, 0.9);
 }
 
 .title {
+  font-family: "cook";
   font-size: 2rem;
   margin-bottom: 1rem;
-  color: #b74a00; /* Color de texto naranja */
+  color: #b74a00;
+  letter-spacing: 6px;
 }
 
 .buttonContainer {
@@ -46,7 +43,7 @@
 .link {
   display: block;
   padding: 0.5rem 1rem;
-  background-color: #bf360c; /* Color de botón marrón */
+  background-color: #bf360c;
   color: white;
   text-decoration: none;
   text-align: center;
@@ -55,5 +52,5 @@
 }
 
 .link:hover {
-  background-color: #ff5722; /* Color de botón naranja en hover */
+  background-color: #ff5722;
 }
