@@ -1,7 +1,17 @@
 .mainContainer {
   display: flex;
-  flex-direction: row;
   justify-content: space-around;
-  border-radius: 15px;
-  border: 1px solid black;
+  background-color: rgb(190, 105, 24);
+  height: 64px;
+  align-items: center;
+  font-family: Helvetica, sans-serif;
+  width: 100%;
+}
+
+.link button {
+  width: 150px;
+  height: 32px;
+  border-radius: 16px;
+  font-family: Helvetica, sans-serif;
+  font-weight: bold;
 }

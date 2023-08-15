@@ -14,7 +14,6 @@ const Detail = () => {
     if (id) dispatch(getRecipeById(id));
     // eslint-disable-next-line
   }, []);
-
   return (
     <div>
       <h1>{recipe?.name}</h1>

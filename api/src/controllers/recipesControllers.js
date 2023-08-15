@@ -2,7 +2,7 @@ require("dotenv").config();
 const { Op } = require("sequelize");
 const { Recipe, Diet } = require("../db");
 const getAllDiets = require("./dietsController");
-/* const axios = require("axios"); */
+const axios = require("axios");
 const { API_KEY } = process.env;
 const recipes = require("../recipes.json");
 const { cleanArray, cleanDiet } = require("../utils");

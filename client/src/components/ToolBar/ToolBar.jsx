@@ -7,7 +7,7 @@ import {
   setGlobalName,
   getRecipesByName,
 } from "../../redux/actions";
-import "./ToolBar.module.css";
+import style from "./ToolBar.module.css";
 
 const ToolBar = () => {
   const dispatch = useDispatch();
@@ -42,9 +42,9 @@ const ToolBar = () => {
   };
 
   return (
-    <div className="toolbar">
-      <div className="orderContainer">
-        <span>Ordenar por:</span>
+    <div className={style.container}>
+      <span>Filtros y ordenamientos</span>
+      <div>
         <select onChange={setSortRecipesHandler} className="selectMain">
           <option value="notSorted">Ordenar por...</option>
           <option value="A-z">A-z</option>
@@ -52,9 +52,17 @@ const ToolBar = () => {
           <option value="L-H">Lower</option>
           <option value="H-L">Higher</option>
         </select>
+        <input
+          type="search"
+          placeholder="Recetas"
+          autoComplete="off"
+          onChange={setLocalNameHandler}
+          value={localName}
+        />
+
+        <button onClick={onSearch}>Buscar</button>
       </div>
-      <div className="filterContainer">
-        <span>Filtrar dietas:</span>
+      <div>
         <select onChange={setFilterByDietHandler} className="selectMain">
           <option value="allDiets">Todas las dietas</option>
           {dietsByName.map((diet, index) => {
@@ -65,25 +73,12 @@ const ToolBar = () => {
             );
           })}
         </select>
-      </div>
-      <div>
-        <span>Filtrar por Origen:</span>
+
         <select onChange={setFilterBySourceHandler} className="selectMain">
           <option value="allRecipes">Todas</option>
           <option value="apiRecipes">Recetas Originales</option>
           <option value="dbRecipes">Recetas Creadas por Vos!</option>
         </select>
-      </div>
-      <div>
-        <input
-          type="search"
-          placeholder="Recetas"
-          autoComplete="off"
-          onChange={setLocalNameHandler}
-          value={localName}
-        />
-
-        <button onClick={onSearch}>Buscar</button>
       </div>
     </div>
   );

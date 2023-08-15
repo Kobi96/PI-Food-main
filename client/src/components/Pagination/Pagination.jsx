@@ -12,9 +12,9 @@ const Pagination = ({ recipesPerPage, totalRecipes, paginate }) => {
     <nav>
       <ul className={style.pagination}>
         {pageNumbers.map((number) => (
-          <li key={number}>
-            <button onClick={() => paginate(number)}>{number}</button>
-          </li>
+          <button key={number} onClick={() => paginate(number)}>
+            {number}
+          </button>
         ))}
       </ul>
     </nav>

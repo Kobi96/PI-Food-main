@@ -1,8 +1,52 @@
+/* Estilos para el componente Card */
 .card {
-  border: 1px solid black;
-  width: fit-content;
-  height: fit-content;
-  border-radius: 10px;
+  border: 1px solid #ccc;
+  width: 400px;
+  height: 200px;
+  margin: 16px;
+  background-color: rgba(200, 200, 200, 0.6); /* Gris claro transparente */
+  border-radius: 16px;
+  display: flex;
+  flex-direction: row;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  transition: box-shadow 1s ease-in-out, background-color 1s ease-in-out; /* Transiciones de sombra y fondo */
+}
+
+.card:hover {
+  box-shadow: 0px 10px 30px rgba(255, 193, 7, 0.9); /* Sombra cálida más fuerte en hover */
+  background-color: #fff350; /* Amarillo claro en hover */
+  transition: box-shadow 1s ease-in-out, background-color 1s ease-in-out; /* Transiciones de sombra y fondo en hover */
+}
+
+.card img {
+  width: 200px;
+  height: 200px;
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
+  margin-right: 16px;
+}
+
+.card h3 {
+  font-family: "Helvetica, sans-serif";
+  color: #b74a00;
+  margin: 0;
+}
+
+.info {
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.cardLink {
+  text-decoration: none;
+  display: inline-block;
+  padding: 8px 16px;
+  margin-top: 8px;
+  border-radius: 16px;
+  font-family: "Helvetica, sans-serif";
+  font-weight: bold;
+
+  color: white;
+  transition: background-color 1s ease-in-out;
 }

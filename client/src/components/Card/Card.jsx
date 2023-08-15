@@ -4,11 +4,13 @@ import { Link } from "react-router-dom/cjs/react-router-dom.min";
 const Card = (props) => {
   return (
     <div className={style.card}>
-      <Link to={`/detail/${props.id}`}>
-        <h1>{props.name}</h1>
-      </Link>
-      <p>Diets:{props.diets}</p>
       <img src={props.image} alt="" />
+      <div className={style.info}>
+        <Link className={style.cardLink} to={`/detail/${props.id}`}>
+          <h3>{props.name}</h3>
+        </Link>
+        <p>Dietas:{props.diets}</p>
+      </div>
     </div>
   );
 };

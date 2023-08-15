@@ -1,0 +1,59 @@
+.backgroundImage {
+  position: absolute;
+  text-align: center;
+  background: url("../../assets/pngtree-table-with-food-on-it-on-a-j-iri-day-image_2543861.png");
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+}
+
+.welcomeSign {
+  background-color: rgba(255, 240, 151, 0.9); /* Fondo amarillo translúcido */
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px auto 0;
+  max-width: 300px;
+  position: relative; /* Agregar posición relativa */
+  transition: box-shadow 0.3s ease-in-out; /* Transición de la sombra */
+}
+
+.welcomeSign {
+  background-color: rgba(255, 240, 151, 0.9); /* Fondo amarillo translúcido */
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px auto 0;
+  max-width: 300px;
+  position: relative; /* Agregar posición relativa */
+  transition: box-shadow 1s ease-in-out; /* Transición de la sombra aún más lenta */
+}
+
+.welcomeSign:hover {
+  box-shadow: 0px 10px 30px rgba(255, 193, 7, 0.9); /* Sombra cálida más fuerte en hover */
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #b74a00; /* Color de texto naranja */
+}
+
+.buttonContainer {
+  margin-top: 1rem;
+}
+
+.link {
+  display: block;
+  padding: 0.5rem 1rem;
+  background-color: #bf360c; /* Color de botón marrón */
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 4px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.link:hover {
+  background-color: #ff5722; /* Color de botón naranja en hover */
+}

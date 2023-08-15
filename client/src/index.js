@@ -6,6 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { getRecipes, getDiets } from "./redux/actions";
 import store from "./redux/store";
+import "./index.css";
 
 store.dispatch(getRecipes());
 store.dispatch(getDiets());

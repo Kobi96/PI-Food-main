@@ -5,8 +5,12 @@ import ToolBar from "../ToolBar/ToolBar";
 const NavBar = () => {
   return (
     <div className={style.mainContainer}>
-      <Link to={"/home"}>HOME</Link>
-      <Link to={"/create"}>FORM</Link>
+      <Link className={style.link} to={"/home"}>
+        <button>HOME</button>
+      </Link>
+      <Link className={style.link} to={"/create"}>
+        <button>FORM</button>
+      </Link>
       <ToolBar />
     </div>
   );

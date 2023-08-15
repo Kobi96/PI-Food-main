@@ -3,6 +3,7 @@ import Pagination from "../../components/Pagination/Pagination";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setRecipesCopy } from "../../redux/actions";
+import style from "./Home.module.css";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -67,7 +68,7 @@ const Home = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <>
+    <div className={style.container}>
       <h1>Qué te apetece hoy?</h1>
       <Pagination
         recipesPerPage={recipesPerPage}
@@ -75,7 +76,7 @@ const Home = () => {
         paginate={paginate}
       />
       <CardsContainer currentRecipes={currentRecipes} />
-    </>
+    </div>
   );
 };
 
