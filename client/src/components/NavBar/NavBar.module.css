@@ -1,17 +1,32 @@
 .mainContainer {
   display: flex;
   justify-content: space-around;
-  background-color: rgb(190, 105, 24);
+  background-color: rgba(190, 105, 24, 0.8);
   height: 64px;
   align-items: center;
   font-family: Helvetica, sans-serif;
   width: 100%;
 }
 
-.link button {
+.link {
+  text-decoration: none;
+}
+
+.navButton {
   width: 150px;
   height: 32px;
   border-radius: 16px;
-  font-family: Helvetica, sans-serif;
+  font-family: "Helvetica, sans-serif";
   font-weight: bold;
+  margin: 4px;
+  cursor: pointer;
+  background-color: rgba(255, 240, 151, 0.9);
+  border: none;
+  color: #b74a00;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.navButton:hover {
+  background-color: #ff5722;
+  color: white;
 }

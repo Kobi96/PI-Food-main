@@ -1,7 +1,14 @@
 .container {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
   width: 40%;
+  font-family: "Helvetica, sans-serif";
+}
+
+.container span {
+  margin-bottom: 8px;
 }
 
 .container select {
@@ -9,6 +16,10 @@
   height: 32px;
   border-radius: 16px;
   padding-left: 8px;
+  font-weight: bold;
+  background-color: rgba(255, 240, 151, 0.9);
+  border: none;
+  color: #b74a00;
 }
 
 .container input {
@@ -16,6 +27,10 @@
   height: 32px;
   border-radius: 16px;
   padding-left: 8px;
+  font-weight: bold;
+  background-color: rgba(255, 240, 151, 0.9);
+  border: none;
+  color: #b74a00;
 }
 
 .container button {
@@ -23,4 +38,15 @@
   height: 32px;
   border-radius: 16px;
   padding-left: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: rgba(255, 240, 151, 0.9);
+  border: none;
+  color: #b74a00;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.container button:hover {
+  background-color: #ff5722;
+  color: white;
 }

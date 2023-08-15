@@ -43,14 +43,13 @@ const ToolBar = () => {
 
   return (
     <div className={style.container}>
-      <span>Filtros y ordenamientos</span>
       <div>
         <select onChange={setSortRecipesHandler} className="selectMain">
-          <option value="notSorted">Ordenar por...</option>
-          <option value="A-z">A-z</option>
-          <option value="Z-a">Z-a</option>
-          <option value="L-H">Lower</option>
-          <option value="H-L">Higher</option>
+          <option value="notSorted">Ordenar...</option>
+          <option value="A-z">De la A a la Z</option>
+          <option value="Z-a">De la Z a la A</option>
+          <option value="L-H">Menos Sanas</option>
+          <option value="H-L">Más Sanas!</option>
         </select>
         <input
           type="search"
@@ -64,7 +63,7 @@ const ToolBar = () => {
       </div>
       <div>
         <select onChange={setFilterByDietHandler} className="selectMain">
-          <option value="allDiets">Todas las dietas</option>
+          <option value="allDiets">Qué dieta buscás?</option>
           {dietsByName.map((diet, index) => {
             return (
               <option value={diet} key={index}>
@@ -75,7 +74,7 @@ const ToolBar = () => {
         </select>
 
         <select onChange={setFilterBySourceHandler} className="selectMain">
-          <option value="allRecipes">Todas</option>
+          <option value="allRecipes">Originales o Creadas?</option>
           <option value="apiRecipes">Recetas Originales</option>
           <option value="dbRecipes">Recetas Creadas por Vos!</option>
         </select>

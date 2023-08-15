@@ -1,21 +1,19 @@
-/* Estilos para el componente Card */
 .card {
   border: 1px solid #ccc;
   width: 400px;
   height: 200px;
   margin: 16px;
-  background-color: rgba(200, 200, 200, 0.6); /* Gris claro transparente */
+  background-color: rgba(200, 200, 200, 0.6);
   border-radius: 16px;
   display: flex;
   flex-direction: row;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
-  transition: box-shadow 1s ease-in-out, background-color 1s ease-in-out; /* Transiciones de sombra y fondo */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 1s ease-in-out, background-color 1s ease-in-out;
 }
 
 .card:hover {
-  box-shadow: 0px 10px 30px rgba(255, 193, 7, 0.9); /* Sombra cálida más fuerte en hover */
-  background-color: #fff350; /* Amarillo claro en hover */
-  transition: box-shadow 1s ease-in-out, background-color 1s ease-in-out; /* Transiciones de sombra y fondo en hover */
+  box-shadow: 0px 10px 30px rgba(255, 193, 7, 0.9);
+  background-color: #fff350;
 }
 
 .card img {

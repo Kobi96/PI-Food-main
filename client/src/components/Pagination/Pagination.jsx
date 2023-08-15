@@ -7,7 +7,6 @@ const Pagination = ({ recipesPerPage, totalRecipes, paginate }) => {
   for (let i = 1; i <= Math.ceil(totalRecipes / recipesPerPage); i++) {
     pageNumbers.push(i);
   }
-
   return (
     <nav>
       <ul className={style.pagination}>

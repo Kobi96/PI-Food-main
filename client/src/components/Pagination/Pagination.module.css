@@ -1,16 +1,27 @@
+/* Pagination.module.css */
 .pagination {
   display: flex;
   flex-direction: row;
   width: 100%;
   justify-content: center;
+  margin-top: 20px; /* Agrega un margen superior */
 }
 
 .pagination button {
   width: 32px;
   height: 32px;
   border-radius: 16px;
-  font-family: Helvetica, sans-serif;
+  font-family: "Helvetica, sans-serif";
   font-weight: bold;
   margin: 4px;
   cursor: pointer;
+  background-color: rgba(255, 240, 151, 0.9); /* Fondo amarillo translúcido */
+  border: none;
+  color: #b74a00; /* Color de texto naranja */
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.pagination button:hover {
+  background-color: #ff5722; /* Color de fondo naranja en hover */
+  color: white; /* Color de texto blanco en hover */
 }

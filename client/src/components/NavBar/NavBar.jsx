@@ -6,10 +6,10 @@ const NavBar = () => {
   return (
     <div className={style.mainContainer}>
       <Link className={style.link} to={"/home"}>
-        <button>HOME</button>
+        <button className={style.navButton}>HOME</button>
       </Link>
       <Link className={style.link} to={"/create"}>
-        <button>FORM</button>
+        <button className={style.navButton}>FORM</button>
       </Link>
       <ToolBar />
     </div>
