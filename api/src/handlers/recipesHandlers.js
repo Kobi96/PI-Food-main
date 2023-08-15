@@ -21,8 +21,8 @@ const getRecipeHandler = async (req, res) => {
 const getRecipesHandler = async (req, res) => {
   const { name } = req.query;
   try {
-    const results = name ? await getRecipesByName(name) : await getAllRecipes();
-
+    const results =
+      name !== undefined ? await getRecipesByName(name) : await getAllRecipes();
     return results.length
       ? res.status(200).json(results)
       : res.status(400).json(`No se ha encontrado la receta ${name}`);
