@@ -7,6 +7,7 @@ import style from "./Detail.module.css";
 
 const Detail = () => {
   const recipe = useSelector((state) => state.recipeDetail);
+
   const id = useParams().id;
 
   const dispatch = useDispatch();

@@ -7,11 +7,11 @@ const axios = require("axios");
 const { API_KEY2 } = process.env;
 
 const getAllDiets = async () => {
-  const apiDietsRaw = recipes.results; /* (
+  const apiDietsRaw = /* recipes.results; */ (
     await axios.get(
       `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY2}&number=75&addRecipeInformation=true`
     )
-  ).data.results; */
+  ).data.results;
   const apiDiets = cleanDiets(apiDietsRaw);
   const dbDiets = await Diet.bulkCreate(apiDiets);
   return dbDiets;
